@@ -16,7 +16,7 @@ CompGCN-FB15K237-single-gpu
 
 导入数据
 -----------------
-pybind11-OpenKE 有一个工具用于导入数据: :py:class:`unike.data.KGEDataLoader`。
+UniKE 有一个工具用于导入数据: :py:class:`unike.data.KGEDataLoader`。
 """
 
 from unike.data import KGEDataLoader, CompGCNSampler, CompGCNTestSampler
@@ -26,7 +26,7 @@ from unike.module.strategy import CompGCNSampling
 from unike.config import Trainer, Tester
 
 ######################################################################
-# pybind11-OpenKE 提供了很多数据集，它们很多都是 KGE 原论文发表时附带的数据集。
+# UniKE 提供了很多数据集，它们很多都是 KGE 原论文发表时附带的数据集。
 # :py:class:`unike.data.KGEDataLoader` 包含 ``in_path`` 用于传递数据集目录。
 
 dataloader = KGEDataLoader(
@@ -46,7 +46,7 @@ dataloader = KGEDataLoader(
 ################################
 # 导入模型
 # ------------------
-# pybind11-OpenKE 提供了很多 KGE 模型，它们都是目前最常用的基线模型。我们下面将要导入
+# UniKE 提供了很多 KGE 模型，它们都是目前最常用的基线模型。我们下面将要导入
 # :py:class:`unike.module.model.CompGCN`，这是一种在图卷积网络中整合多关系信息的新框架，
 # 它利用知识图谱嵌入技术中的各种组合操作，将实体和关系共同嵌入到图中。
 
@@ -83,7 +83,7 @@ model = CompGCNSampling(
 ######################################################################
 # 训练模型
 # -------------
-# pybind11-OpenKE 将训练循环包装成了 :py:class:`unike.config.Trainer`，
+# UniKE 将训练循环包装成了 :py:class:`unike.config.Trainer`，
 # 可以运行它的 :py:meth:`unike.config.Trainer.run` 函数进行模型学习；
 # 也可以通过传入 :py:class:`unike.config.Tester`，
 # 使得训练器能够在训练过程中评估模型。

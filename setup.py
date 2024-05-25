@@ -8,7 +8,7 @@ setup(
     version=__version__,
     author="LuYF-Lemon-love",
     author_email="3555028709@qq.com",
-    url="https://github.com/LuYF-Lemon-love/pybind11-OpenKE",
+    url="https://github.com/CPU-DS/UniKE",
     description="基于 OpenKE-PyTorch 开发的知识图谱嵌入工具包",
     long_description="基于 OpenKE-PyTorch 开发的知识图谱嵌入工具包，底层数据处理利用 Python 实现。",
     extras_require={"test": "pytest"},
