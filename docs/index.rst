@@ -1,9 +1,9 @@
 .. include:: ../README.rst
 
-欢迎来到 pybind11-OpenKE 文档！
+欢迎来到 UniKE 文档！
 ===================================
 
-**pybind11-OpenKE** 是一个知识图谱嵌入工具包，能够运行在 Windows 和 Linux 操作系统上。
+**UniKE** 是一个知识图谱嵌入工具包，能够运行在 Windows 和 Linux 操作系统上。
 
 为了使用 pybind11-OpenKE，请先 :doc:`install` 这个项目。 
 

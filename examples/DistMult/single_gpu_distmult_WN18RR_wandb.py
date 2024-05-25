@@ -16,7 +16,7 @@ DistMult-WN18RR-single-gpu-wandb
 
 导入数据
 -----------------
-pybind11-OpenKE 有两个工具用于导入数据: :py:class:`unike.data.KGEDataLoader`。
+UniKE 有两个工具用于导入数据: :py:class:`unike.data.KGEDataLoader`。
 """
 
 from unike.utils import WandbLogger
@@ -57,7 +57,7 @@ wandb_logger = WandbLogger(
 config = wandb_logger.config
 
 ######################################################################
-# pybind11-OpenKE 提供了很多数据集，它们很多都是 KGE 原论文发表时附带的数据集。
+# UniKE 提供了很多数据集，它们很多都是 KGE 原论文发表时附带的数据集。
 # :py:class:`unike.data.KGEDataLoader` 包含 ``in_path`` 用于传递数据集目录。
 
 # dataloader for training
@@ -79,7 +79,7 @@ dataloader = KGEDataLoader(
 ################################
 # 导入模型
 # ------------------
-# pybind11-OpenKE 提供了很多 KGE 模型，它们都是目前最常用的基线模型。我们下面将要导入
+# UniKE 提供了很多 KGE 模型，它们都是目前最常用的基线模型。我们下面将要导入
 # :py:class:`unike.module.model.DistMult`，它是最简单的双线性模型。
 
 # define the model
@@ -115,7 +115,7 @@ model = NegativeSampling(
 ######################################################################
 # 训练模型
 # -------------
-# pybind11-OpenKE 将训练循环包装成了 :py:class:`unike.config.Trainer`，
+# UniKE 将训练循环包装成了 :py:class:`unike.config.Trainer`，
 # 可以运行它的 :py:meth:`unike.config.Trainer.run` 函数进行模型学习；
 # 也可以通过传入 :py:class:`unike.config.Tester`，
 # 使得训练器能够在训练过程中评估模型。

@@ -31,7 +31,7 @@ TransH-FB15K237-accelerate-wandb
 
 导入数据
 -----------------
-pybind11-OpenKE 有 1 个工具用于导入数据: :py:class:`unike.data.KGEDataLoader`。
+UniKE 有 1 个工具用于导入数据: :py:class:`unike.data.KGEDataLoader`。
 """
 
 from unike.utils import WandbLogger
@@ -95,7 +95,7 @@ dataloader = KGEDataLoader(
 ################################
 # 导入模型
 # ------------------
-# pybind11-OpenKE 提供了很多 KGE 模型，它们都是目前最常用的基线模型。我们下面将要导入
+# UniKE 提供了很多 KGE 模型，它们都是目前最常用的基线模型。我们下面将要导入
 # :py:class:`unike.module.model.TransH`，它提出于 2014 年，是第二个平移模型，
 # 将关系建模为超平面上的平移操作。
 
@@ -134,7 +134,7 @@ model = NegativeSampling(
 # -------------
 # 为了进行多 GPU 训练，需要先调用 :py:meth:`unike.config.accelerator_prepare` 对数据和模型进行包装。
 #
-# pybind11-OpenKE 将训练循环包装成了 :py:class:`unike.config.Trainer`，
+# UniKE 将训练循环包装成了 :py:class:`unike.config.Trainer`，
 # 可以运行它的 :py:meth:`unike.config.Trainer.run` 函数进行模型学习；
 # 也可以通过传入 :py:class:`unike.config.Tester`，
 # 使得训练器能够在训练过程中评估模型。
