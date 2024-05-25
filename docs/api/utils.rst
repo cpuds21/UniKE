@@ -1,9 +1,9 @@
-pybind11_ke.utils
+unike.utils
 ===================================
 
-.. automodule:: pybind11_ke.utils
+.. automodule:: unike.utils
 
-.. contents:: pybind11_ke.utils
+.. contents:: unike.utils
     :depth: 2
     :local:
     :backlinks: top

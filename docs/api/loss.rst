@@ -1,9 +1,9 @@
-pybind11_ke.module.loss
+unike.module.loss
 ===================================
 
-.. automodule:: pybind11_ke.module.loss
+.. automodule:: unike.module.loss
 
-.. contents:: pybind11_ke.module.loss
+.. contents:: unike.module.loss
     :depth: 3
     :local:
     :backlinks: top

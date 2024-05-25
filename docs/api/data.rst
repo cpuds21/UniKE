@@ -1,9 +1,9 @@
-pybind11_ke.data
+unike.data
 ======================================================================
 
-.. automodule:: pybind11_ke.data
+.. automodule:: unike.data
 
-.. contents:: pybind11_ke.data
+.. contents:: unike.data
     :depth: 2
     :local:
     :backlinks: top

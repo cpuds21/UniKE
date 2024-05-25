@@ -1,9 +1,9 @@
-pybind11_ke.module.strategy
+unike.module.strategy
 ===================================
 
-.. automodule:: pybind11_ke.module.strategy
+.. automodule:: unike.module.strategy
 
-.. contents:: pybind11_ke.module.strategy
+.. contents:: unike.module.strategy
     :depth: 3
     :local:
     :backlinks: top

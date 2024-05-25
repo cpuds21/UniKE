@@ -21,21 +21,21 @@ SimplE
 
 因此，遵从 ``SimplE`` 作者的建议，依据 https://github.com/baharefatemi/SimplE/blob/master/SimplE.py 实现 ``SimplE`` 。
 
-最终实现可以从 `这里 <_modules/pybind11_ke/module/model/SimplE.html#SimplE>`_ 得到。
+最终实现可以从 `这里 <_modules/unike/module/model/SimplE.html#SimplE>`_ 得到。
 
 .. _details_hole:
 
 HolE
 ---------
 
-.. WARNING:: 由于 :py:class:`pybind11_ke.module.model.HolE` 的
-    :py:meth:`pybind11_ke.module.model.HolE._ccorr` （`OpenKE-PyTorch 的原始实现 <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/HolE.py#L60>`__）需要
+.. WARNING:: 由于 :py:class:`unike.module.model.HolE` 的
+    :py:meth:`unike.module.model.HolE._ccorr` （`OpenKE-PyTorch 的原始实现 <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/HolE.py#L60>`__）需要
     `torch.rfft <https://pytorch.org/docs/1.7.0/generated/torch.rfft.html#torch.rfft>`_ 和 `torch.ifft <https://pytorch.org/docs/1.7.0/generated/torch.ifft.html#torch.ifft>`_ 分别计算实数到复数离散傅里叶变换和复数到复数离散傅立叶逆变换。
     ``pytorch`` 在版本 ``1.8.0`` 移除了上述两个函数，并且在版本 ``1.7.0`` 给出了警告。
     因此，需要适配到更高版本的 ``pytorch``。
 
 .. Important::
-    我参考了 `PyKEEN 的 hole_interaction 实现 <https://pykeen.readthedocs.io/en/stable/api/pykeen.nn.functional.hole_interaction.html#pykeen.nn.functional.hole_interaction>`_ ，重新实现了 :py:class:`pybind11_ke.module.model.HolE`，
+    我参考了 `PyKEEN 的 hole_interaction 实现 <https://pykeen.readthedocs.io/en/stable/api/pykeen.nn.functional.hole_interaction.html#pykeen.nn.functional.hole_interaction>`_ ，重新实现了 :py:class:`unike.module.model.HolE`，
     使其能够适配到更高版本的 ``pytorch``。
 
 RESCAL
@@ -45,13 +45,13 @@ RESCAL
 `predict <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/RESCAL.py#L45>`__ 的
 负号，原因如下：
 
-由于 :py:class:`pybind11_ke.module.model.RESCAL` 采用 :py:class:`pybind11_ke.module.loss.MarginLoss` 进行训练，因此需要正样本评分函数的得分应小于负样本评分函数的得分，
-:py:class:`pybind11_ke.module.model.RESCAL` 的评分函数需要添加负号即 :py:meth:`pybind11_ke.module.model.RESCAL._calc` 需要添加负号；
+由于 :py:class:`unike.module.model.RESCAL` 采用 :py:class:`unike.module.loss.MarginLoss` 进行训练，因此需要正样本评分函数的得分应小于负样本评分函数的得分，
+:py:class:`unike.module.model.RESCAL` 的评分函数需要添加负号即 :py:meth:`unike.module.model.RESCAL._calc` 需要添加负号；
 由于 pybind11-OpenKE 使用底层 C++ 模块进行评估模型性能，该模块需要正样本的得分小于负样本的得分，
-因此 :py:meth:`pybind11_ke.module.model.RESCAL.predict` 不需要在 :py:meth:`pybind11_ke.module.model.RESCAL.forward` 返回的结果上添加负号。
+因此 :py:meth:`unike.module.model.RESCAL.predict` 不需要在 :py:meth:`unike.module.model.RESCAL.forward` 返回的结果上添加负号。
 
 .. Important::
-    实验表明，去掉 :py:meth:`pybind11_ke.module.model.RESCAL.predict` 负号能够大幅度改善模型的评估结果。
+    实验表明，去掉 :py:meth:`unike.module.model.RESCAL.predict` 负号能够大幅度改善模型的评估结果。
 
 ANALOGY
 ---------
@@ -82,4 +82,4 @@ ANALOGY
 
 从运行结果也没发现差异。 
 
-最终实现可以从 :py:class:`pybind11_ke.module.model.Analogy` 得到。
+最终实现可以从 :py:class:`unike.module.model.Analogy` 得到。

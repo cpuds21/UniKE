@@ -1,9 +1,9 @@
-pybind11_ke.module.model
+unike.module.model
 ===================================
 
-.. automodule:: pybind11_ke.module.model
+.. automodule:: unike.module.model
 
-.. contents:: pybind11_ke.module.model
+.. contents:: unike.module.model
     :depth: 3
     :local:
     :backlinks: top

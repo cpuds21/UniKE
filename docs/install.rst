@@ -15,8 +15,8 @@ Pip
 
 ::
 
-    >>> import pybind11_ke
-    >>> pybind11_ke.__version__
+    >>> import unike
+    >>> unike.__version__
     '3.0.0'
     >>>
 

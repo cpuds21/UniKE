@@ -17,18 +17,18 @@ TransR-FB15K237-single-gpu
 
 导入数据
 -----------------
-pybind11-OpenKE 有两个工具用于导入数据: :py:class:`pybind11_ke.data.KGEDataLoader`。
+pybind11-OpenKE 有两个工具用于导入数据: :py:class:`unike.data.KGEDataLoader`。
 """
 
-from pybind11_ke.data import KGEDataLoader, BernSampler, TradTestSampler
-from pybind11_ke.module.model import TransE, TransR
-from pybind11_ke.module.loss import MarginLoss
-from pybind11_ke.module.strategy import NegativeSampling
-from pybind11_ke.config import Trainer, Tester
+from unike.data import KGEDataLoader, BernSampler, TradTestSampler
+from unike.module.model import TransE, TransR
+from unike.module.loss import MarginLoss
+from unike.module.strategy import NegativeSampling
+from unike.config import Trainer, Tester
 
 ######################################################################
 # pybind11-OpenKE 提供了很多数据集，它们很多都是 KGE 原论文发表时附带的数据集。 
-# :py:class:`pybind11_ke.data.KGEDataLoader` 包含 ``in_path`` 用于传递数据集目录。
+# :py:class:`unike.data.KGEDataLoader` 包含 ``in_path`` 用于传递数据集目录。
 
 # dataloader for training
 dataloader = KGEDataLoader(
@@ -50,9 +50,9 @@ dataloader = KGEDataLoader(
 # 导入模型
 # ------------------
 # pybind11-OpenKE 提供了很多 KGE 模型，它们都是目前最常用的基线模型。我们首先导入
-# :py:class:`pybind11_ke.module.model.TransE`，它是最简单的平移模型，
-# 因为为了避免过拟合，:py:class:`pybind11_ke.module.model.TransR` 实体和关系的嵌入向量初始化为
-# :py:class:`pybind11_ke.module.model.TransE` 的结果。
+# :py:class:`unike.module.model.TransE`，它是最简单的平移模型，
+# 因为为了避免过拟合，:py:class:`unike.module.model.TransR` 实体和关系的嵌入向量初始化为
+# :py:class:`unike.module.model.TransE` 的结果。
 
 # define the transe
 transe = TransE(
@@ -63,7 +63,7 @@ transe = TransE(
 	norm_flag = True)
 
 ######################################################################
-# 下面导入 :py:class:`pybind11_ke.module.model.TransR` 模型，
+# 下面导入 :py:class:`unike.module.model.TransR` 模型，
 # 是一个为实体和关系嵌入向量分别构建了独立的向量空间，将实体向量投影到特定的关系向量空间进行平移操作的模型。
 
 transr = TransR(
@@ -83,9 +83,9 @@ transr = TransR(
 #####################################################################
 # 损失函数
 # ----------------------------------------
-# 我们这里使用了 ``TransE`` :cite:`TransE` 原论文使用的损失函数：:py:class:`pybind11_ke.module.loss.MarginLoss`，
-# :py:class:`pybind11_ke.module.strategy.NegativeSampling` 对
-# :py:class:`pybind11_ke.module.loss.MarginLoss` 进行了封装，加入权重衰减等额外项。
+# 我们这里使用了 ``TransE`` :cite:`TransE` 原论文使用的损失函数：:py:class:`unike.module.loss.MarginLoss`，
+# :py:class:`unike.module.strategy.NegativeSampling` 对
+# :py:class:`unike.module.loss.MarginLoss` 进行了封装，加入权重衰减等额外项。
 
 model_e = NegativeSampling(
 	model = transe, 
@@ -104,9 +104,9 @@ model_r = NegativeSampling(
 ######################################################################
 # 训练模型
 # -------------
-# pybind11-OpenKE 将训练循环包装成了 :py:class:`pybind11_ke.config.Trainer`，
-# 可以运行它的 :py:meth:`pybind11_ke.config.Trainer.run` 函数进行模型学习；
-# 也可以通过传入 :py:class:`pybind11_ke.config.Tester`，
+# pybind11-OpenKE 将训练循环包装成了 :py:class:`unike.config.Trainer`，
+# 可以运行它的 :py:meth:`unike.config.Trainer.run` 函数进行模型学习；
+# 也可以通过传入 :py:class:`unike.config.Tester`，
 # 使得训练器能够在训练过程中评估模型。
 
 # pretrain transe

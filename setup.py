@@ -4,7 +4,7 @@ from setuptools import find_namespace_packages
 __version__ = "3.0.0"
 
 setup(
-    name="pybind11_ke",
+    name="unike",
     version=__version__,
     author="LuYF-Lemon-love",
     author_email="3555028709@qq.com",
@@ -14,8 +14,7 @@ setup(
     extras_require={"test": "pytest"},
     zip_safe=False,
     python_requires=">=3.7",
-    packages=find_namespace_packages(include=['pybind11_ke*'],
-                                     exclude=['pybind11_ke_examples']),
+    packages=find_namespace_packages(include=['unike*']),
     install_requires=[
         "torch",
         "pandas",

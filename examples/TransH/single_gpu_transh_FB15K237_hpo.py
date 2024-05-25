@@ -21,17 +21,17 @@ TransH-FB15K237-single-gpu-hpo
 """
 
 import pprint
-from pybind11_ke.data import get_kge_data_loader_hpo_config
-from pybind11_ke.module.model import get_transh_hpo_config
-from pybind11_ke.module.loss import get_margin_loss_hpo_config
-from pybind11_ke.module.strategy import get_negative_sampling_hpo_config
-from pybind11_ke.config import get_tester_hpo_config
-from pybind11_ke.config import get_trainer_hpo_config
-from pybind11_ke.config import set_hpo_config, start_hpo_train
+from unike.data import get_kge_data_loader_hpo_config
+from unike.module.model import get_transh_hpo_config
+from unike.module.loss import get_margin_loss_hpo_config
+from unike.module.strategy import get_negative_sampling_hpo_config
+from unike.config import get_tester_hpo_config
+from unike.config import get_trainer_hpo_config
+from unike.config import set_hpo_config, start_hpo_train
 
 ######################################################################
-# :py:func:`pybind11_ke.data.get_kge_data_loader_hpo_config` 将返回
-# :py:class:`pybind11_ke.data.KGEDataLoader` 的默认超参数优化范围，
+# :py:func:`unike.data.get_kge_data_loader_hpo_config` 将返回
+# :py:class:`unike.data.KGEDataLoader` 的默认超参数优化范围，
 # 你可以修改数据目录等信息。
 
 data_loader_config = get_kge_data_loader_hpo_config()
@@ -52,8 +52,8 @@ data_loader_config.update({
 ################################
 # 定义模型超参数优化范围
 # ---------------------------------------------------------
-# :py:func:`pybind11_ke.module.model.get_transh_hpo_config` 返回了
-# :py:class:`pybind11_ke.module.model.TransH` 的默认超参数优化范围。
+# :py:func:`unike.module.model.get_transh_hpo_config` 返回了
+# :py:class:`unike.module.model.TransH` 的默认超参数优化范围。
 
 # set the hpo config
 kge_config = get_transh_hpo_config()
@@ -68,8 +68,8 @@ print()
 ################################
 # 定义损失函数超参数优化范围
 # ---------------------------------------------------------
-# :py:func:`pybind11_ke.module.loss.get_margin_loss_hpo_config` 返回了
-# :py:class:`pybind11_ke.module.loss.MarginLoss` 的默认超参数优化范围。
+# :py:func:`unike.module.loss.get_margin_loss_hpo_config` 返回了
+# :py:class:`unike.module.loss.MarginLoss` 的默认超参数优化范围。
 
 # set the hpo config
 loss_config = get_margin_loss_hpo_config()
@@ -84,8 +84,8 @@ print()
 ################################
 # 定义训练策略超参数优化范围
 # ---------------------------------------------------------
-# :py:func:`pybind11_ke.module.strategy.get_negative_sampling_hpo_config` 返回了
-# :py:class:`pybind11_ke.module.strategy.NegativeSampling` 的默认超参数优化范围。
+# :py:func:`unike.module.strategy.get_negative_sampling_hpo_config` 返回了
+# :py:class:`unike.module.strategy.NegativeSampling` 的默认超参数优化范围。
 
 # set the hpo config
 strategy_config = get_negative_sampling_hpo_config()
@@ -100,8 +100,8 @@ print()
 ################################
 # 定义评估器超参数优化范围
 # ---------------------------------------------------------
-# :py:func:`pybind11_ke.config.get_tester_hpo_config` 返回了
-# :py:class:`pybind11_ke.config.Tester` 的默认超参数优化范围。
+# :py:func:`unike.config.get_tester_hpo_config` 返回了
+# :py:class:`unike.config.Tester` 的默认超参数优化范围。
 
 # set the hpo config
 tester_config = get_tester_hpo_config()
@@ -116,8 +116,8 @@ print()
 ################################
 # 定义训练器超参数优化范围
 # ---------------------------------------------------------
-# :py:func:`pybind11_ke.config.get_trainer_hpo_config` 返回了
-# :py:class:`pybind11_ke.config.Trainer` 的默认超参数优化范围。
+# :py:func:`unike.config.get_trainer_hpo_config` 返回了
+# :py:class:`unike.config.Trainer` 的默认超参数优化范围。
 
 # set the hpo config
 trainer_config = get_trainer_hpo_config()
@@ -132,7 +132,7 @@ print()
 ################################
 # 设置超参数优化参数
 # ---------------------------------------------------------
-# :py:func:`pybind11_ke.config.set_hpo_config` 可以设置超参数优化参数。
+# :py:func:`unike.config.set_hpo_config` 可以设置超参数优化参数。
 
 # set the hpo config
 sweep_config = set_hpo_config(
@@ -154,7 +154,7 @@ print()
 ################################
 # 开始超参数优化
 # ---------------------------------------------------------
-# :py:func:`pybind11_ke.config.start_hpo_train` 可以开始超参数优化。
+# :py:func:`unike.config.start_hpo_train` 可以开始超参数优化。
 
 # start hpo
 start_hpo_train(config=sweep_config, count=3)

@@ -1,9 +1,9 @@
-pybind11_ke.config
+unike.config
 ===================================
 
-.. automodule:: pybind11_ke.config
+.. automodule:: unike.config
 
-.. contents:: pybind11_ke.config
+.. contents:: unike.config
     :depth: 2
     :local:
     :backlinks: top

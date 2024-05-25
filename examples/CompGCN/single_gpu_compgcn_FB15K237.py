@@ -16,18 +16,18 @@ CompGCN-FB15K237-single-gpu
 
 导入数据
 -----------------
-pybind11-OpenKE 有一个工具用于导入数据: :py:class:`pybind11_ke.data.KGEDataLoader`。
+pybind11-OpenKE 有一个工具用于导入数据: :py:class:`unike.data.KGEDataLoader`。
 """
 
-from pybind11_ke.data import KGEDataLoader, CompGCNSampler, CompGCNTestSampler
-from pybind11_ke.module.model import CompGCN
-from pybind11_ke.module.loss import CompGCNLoss
-from pybind11_ke.module.strategy import CompGCNSampling
-from pybind11_ke.config import Trainer, Tester
+from unike.data import KGEDataLoader, CompGCNSampler, CompGCNTestSampler
+from unike.module.model import CompGCN
+from unike.module.loss import CompGCNLoss
+from unike.module.strategy import CompGCNSampling
+from unike.config import Trainer, Tester
 
 ######################################################################
 # pybind11-OpenKE 提供了很多数据集，它们很多都是 KGE 原论文发表时附带的数据集。
-# :py:class:`pybind11_ke.data.KGEDataLoader` 包含 ``in_path`` 用于传递数据集目录。
+# :py:class:`unike.data.KGEDataLoader` 包含 ``in_path`` 用于传递数据集目录。
 
 dataloader = KGEDataLoader(
 	in_path = "../../benchmarks/FB15K237/",
@@ -47,7 +47,7 @@ dataloader = KGEDataLoader(
 # 导入模型
 # ------------------
 # pybind11-OpenKE 提供了很多 KGE 模型，它们都是目前最常用的基线模型。我们下面将要导入
-# :py:class:`pybind11_ke.module.model.CompGCN`，这是一种在图卷积网络中整合多关系信息的新框架，
+# :py:class:`unike.module.model.CompGCN`，这是一种在图卷积网络中整合多关系信息的新框架，
 # 它利用知识图谱嵌入技术中的各种组合操作，将实体和关系共同嵌入到图中。
 
 # define the model
@@ -65,9 +65,9 @@ compgcn = CompGCN(
 #####################################################################
 # 损失函数
 # ----------------------------------------
-# 我们这里使用了 ``CompGCN`` :cite:`CompGCN` 原论文使用的损失函数：:py:class:`pybind11_ke.module.loss.CompGCNLoss`，
-# :py:class:`pybind11_ke.module.strategy.CompGCNSampling` 对
-# :py:class:`pybind11_ke.module.loss.CompGCNLoss` 进行了封装。
+# 我们这里使用了 ``CompGCN`` :cite:`CompGCN` 原论文使用的损失函数：:py:class:`unike.module.loss.CompGCNLoss`，
+# :py:class:`unike.module.strategy.CompGCNSampling` 对
+# :py:class:`unike.module.loss.CompGCNLoss` 进行了封装。
 
 # define the loss function
 model = CompGCNSampling(
@@ -83,9 +83,9 @@ model = CompGCNSampling(
 ######################################################################
 # 训练模型
 # -------------
-# pybind11-OpenKE 将训练循环包装成了 :py:class:`pybind11_ke.config.Trainer`，
-# 可以运行它的 :py:meth:`pybind11_ke.config.Trainer.run` 函数进行模型学习；
-# 也可以通过传入 :py:class:`pybind11_ke.config.Tester`，
+# pybind11-OpenKE 将训练循环包装成了 :py:class:`unike.config.Trainer`，
+# 可以运行它的 :py:meth:`unike.config.Trainer.run` 函数进行模型学习；
+# 也可以通过传入 :py:class:`unike.config.Tester`，
 # 使得训练器能够在训练过程中评估模型。
 
 # test the model

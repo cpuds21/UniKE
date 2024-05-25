@@ -3,7 +3,7 @@ import sys
 sys.path.insert(0, os.path.abspath('./'))
 sys.path.insert(0, os.path.abspath('../'))
 
-import pybind11_ke as package
+import unike as package
 
 pkg_name = package.__name__
 pkg_file = package.__file__

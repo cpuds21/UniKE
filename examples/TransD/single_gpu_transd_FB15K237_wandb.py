@@ -15,18 +15,18 @@ TransD-FB15K237-single-gpu-wandb
 
 导入数据
 -----------------
-pybind11-OpenKE 有两个工具用于导入数据: :py:class:`pybind11_ke.data.KGEDataLoader`。
+pybind11-OpenKE 有两个工具用于导入数据: :py:class:`unike.data.KGEDataLoader`。
 """
 
-from pybind11_ke.utils import WandbLogger
-from pybind11_ke.data import KGEDataLoader, BernSampler, TradTestSampler
-from pybind11_ke.module.model import TransD
-from pybind11_ke.module.loss import MarginLoss
-from pybind11_ke.module.strategy import NegativeSampling
-from pybind11_ke.config import Trainer, Tester
+from unike.utils import WandbLogger
+from unike.data import KGEDataLoader, BernSampler, TradTestSampler
+from unike.module.model import TransD
+from unike.module.loss import MarginLoss
+from unike.module.strategy import NegativeSampling
+from unike.config import Trainer, Tester
 
 ######################################################################
-# 首先初始化 :py:class:`pybind11_ke.utils.WandbLogger` 日志记录器，它是对 wandb 初始化操作的一层简单封装。
+# 首先初始化 :py:class:`unike.utils.WandbLogger` 日志记录器，它是对 wandb 初始化操作的一层简单封装。
 
 wandb_logger = WandbLogger(
 	project="pybind11-ke",
@@ -60,7 +60,7 @@ config = wandb_logger.config
 
 ######################################################################
 # pybind11-OpenKE 提供了很多数据集，它们很多都是 KGE 原论文发表时附带的数据集。
-# :py:class:`pybind11_ke.data.KGEDataLoader` 包含 ``in_path`` 用于传递数据集目录。
+# :py:class:`unike.data.KGEDataLoader` 包含 ``in_path`` 用于传递数据集目录。
 
 # dataloader for training
 dataloader = KGEDataLoader(
@@ -82,7 +82,7 @@ dataloader = KGEDataLoader(
 # 导入模型
 # ------------------
 # pybind11-OpenKE 提供了很多 KGE 模型，它们都是目前最常用的基线模型。我们下面将要导入
-# :py:class:`pybind11_ke.module.model.TransD`，它是动态构建映射矩阵的平移模型。
+# :py:class:`unike.module.model.TransD`，它是动态构建映射矩阵的平移模型。
 
 # define the model
 transd = TransD(
@@ -101,9 +101,9 @@ transd = TransD(
 #####################################################################
 # 损失函数
 # ----------------------------------------
-# 我们这里使用了 TransD 原论文使用的损失函数：:py:class:`pybind11_ke.module.loss.MarginLoss`，
-# :py:class:`pybind11_ke.module.strategy.NegativeSampling` 对
-# :py:class:`pybind11_ke.module.loss.MarginLoss` 进行了封装，加入权重衰减等额外项。
+# 我们这里使用了 TransD 原论文使用的损失函数：:py:class:`unike.module.loss.MarginLoss`，
+# :py:class:`unike.module.strategy.NegativeSampling` 对
+# :py:class:`unike.module.loss.MarginLoss` 进行了封装，加入权重衰减等额外项。
 
 # define the loss function
 model = NegativeSampling(
@@ -118,9 +118,9 @@ model = NegativeSampling(
 ######################################################################
 # 训练模型
 # -------------
-# pybind11-OpenKE 将训练循环包装成了 :py:class:`pybind11_ke.config.Trainer`，
-# 可以运行它的 :py:meth:`pybind11_ke.config.Trainer.run` 函数进行模型学习；
-# 也可以通过传入 :py:class:`pybind11_ke.config.Tester`，
+# pybind11-OpenKE 将训练循环包装成了 :py:class:`unike.config.Trainer`，
+# 可以运行它的 :py:meth:`unike.config.Trainer.run` 函数进行模型学习；
+# 也可以通过传入 :py:class:`unike.config.Tester`，
 # 使得训练器能够在训练过程中评估模型。
 
 # test the model
