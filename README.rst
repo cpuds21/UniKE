@@ -14,8 +14,8 @@ UniKE — 知识图谱嵌入工具包
 `unike.readthedocs.io <https://unike.readthedocs.io/zh_CN/latest/>`_。
 源代码可以访问 `github.com/CPU-DS/UniKE <https://github.com/CPU-DS/UniKE>`_。
 
-📁 `pybind11_ke/ <https://github.com/CPU-DS/UniKE/tree/main/pybind11_ke/>`_
-    UniKE 源代码保存在 ``pybind11_ke/``。
+📁 `unike/ <https://github.com/CPU-DS/UniKE/tree/main/unike/>`_
+    UniKE 源代码保存在 ``unike/``。
 
 📚 `docs/ <https://github.com/CPU-DS/UniKE/tree/main/docs/>`_
     所有的文档源文件保存在 ``docs/``。 所有的 ``*.rst`` 构成了文档中的各个部分。
@@ -23,8 +23,8 @@ UniKE — 知识图谱嵌入工具包
 🌰 `examples/ <https://github.com/CPU-DS/UniKE/tree/main/examples/>`_
     UniKE 的例子保存在 ``examples/``，修改自 ``OpenKE-PyTorch``。
 
-📍 `logs/ <https://github.com/CPU-DS/UniKE/tree/main/logs/>`_
-    UniKE 的例子运行日志保存在 ``logs/``。
+📍 `docs/_static/logs/ <https://github.com/CPU-DS/UniKE/tree/main/docs/_static/logs/>`_
+    UniKE 的例子运行日志保存在 ``docs/_static/logs/``。
 
 💡 `benchmarks/ <https://github.com/CPU-DS/UniKE/tree/main/benchmarks/>`_
     常用的知识图谱保存在 ``benchmarks/``。
@@ -46,7 +46,7 @@ UniKE — 知识图谱嵌入工具包
 
 - **2.0.0 版本**: 使用 Python 重写底层数据处理，进而能够做到跨平台 (Windows, Linux)。
 
-- 使用 `Setuptools <https://setuptools.pypa.io/en/latest/>`__ 打包了 pybind11-OpenKE， 使得能够像其他第三方库一样使用。
+- 使用 `Setuptools <https://setuptools.pypa.io/en/latest/>`__ 打包了 UniKE， 使得能够像其他第三方库一样使用。
 
 - 增加了文档。
 
@@ -96,7 +96,7 @@ UniKE — 知识图谱嵌入工具包
 如何引用这个项目？
 ---------------------------
 
-如果您发现 UniKE 对您的研究有用，请考虑使用以下 BibTeX 模板引用 pybind11-OpenKE：
+如果您发现 UniKE 对您的研究有用，请考虑使用以下 BibTeX 模板引用 UniKE：
 
 ::
 
