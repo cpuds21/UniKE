@@ -28,7 +28,7 @@ TransE
 
 .. Important:: 对于给定的实体，作为头实体和尾实体时，它的嵌入向量是相同的。原论文中对实体向量施加了 :math:`L_{2}-norm` 限制，将实体限制为 1。
 
-pybind11-OpenKE 的 TransE 实现传送门：:py:class:`unike.module.model.TransE`
+UniKE 的 TransE 实现传送门：:py:class:`unike.module.model.TransE`
 
 .. _transh:
 
@@ -63,7 +63,7 @@ TransH
 
 由于上面负采样过程中定义了一个伯努利分布（Bernoulli distribution），所以该采样方法被记为 ``bern.``，TransE 中以均等概率替换头尾实体的采样方法被记为 ``unif``。
 
-pybind11-OpenKE 的 TransH 实现传送门：:py:class:`unike.module.model.TransH`
+UniKE 的 TransH 实现传送门：:py:class:`unike.module.model.TransH`
 
 .. _transr:
 
@@ -101,7 +101,7 @@ TransR
 
 .. Important:: 为了避免过拟合，实体和关系的嵌入向量初始化为 TransE 的结果，关系矩阵 :math:`M_r` 初始为单位矩阵。
 
-pybind11-OpenKE 的 TransR 实现传送门：:py:class:`unike.module.model.TransR`
+UniKE 的 TransR 实现传送门：:py:class:`unike.module.model.TransR`
 
 .. _transd:
 
@@ -141,7 +141,7 @@ TransD
 
 .. Important:: 为了加速收敛和避免过拟合，实体和关系的嵌入向量初始化为 TransE 的结果。
 
-pybind11-OpenKE 的 TransD 实现传送门：:py:class:`unike.module.model.TransD`
+UniKE 的 TransD 实现传送门：:py:class:`unike.module.model.TransD`
 
 .. _rotate:
 
@@ -186,7 +186,7 @@ RotatE
 
     \mathcal{L} = -\log\sigma(f_r(h,t))-\sum_{i=1}^{n}p_r(h_i^{'},t_i^{'})\log\sigma(-f_r(h_i^{'},t_i^{'}))
 
-pybind11-OpenKE 的 RotatE 实现传送门：:py:class:`unike.module.model.RotatE`
+UniKE 的 RotatE 实现传送门：:py:class:`unike.module.model.RotatE`
 
 语义匹配模型
 ----------------------------------
@@ -206,7 +206,7 @@ RESCAL
 
 :math:`\mathbf{M}_r` 是关系 :math:`r` 对应的关系矩阵。
 
-pybind11-OpenKE 的 RESCAL 实现传送门：:py:class:`unike.module.model.RESCAL`
+UniKE 的 RESCAL 实现传送门：:py:class:`unike.module.model.RESCAL`
 
 .. _distMult:
 
@@ -232,7 +232,7 @@ DistMult
 
 .. Important:: DistMult 不能够区分关系 :math:`r` 和与关系 :math:`r` 相反的关系。
 
-pybind11-OpenKE 的 DistMult 实现传送门：:py:class:`unike.module.model.DistMult`
+UniKE 的 DistMult 实现传送门：:py:class:`unike.module.model.DistMult`
 
 .. _hole:
 
@@ -272,7 +272,7 @@ HolE
     
 :math:`[x]_{+}` 表示 :math:`x` 的正数部分，:math:`\gamma > 0` 是一个 **margin** 超参数。
 
-pybind11-OpenKE 的 HolE 实现传送门：:py:class:`unike.module.model.HolE`
+UniKE 的 HolE 实现传送门：:py:class:`unike.module.model.HolE`
 
 .. _complex:
 
@@ -303,7 +303,7 @@ ComplEx
 
 .. Important:: 对数似然损失（log-likelihood loss）比成对排名损失（pairwise ranking loss）效果更好；每一个训练三元组生成更多的负三元组会产生更好的效果。
 
-pybind11-OpenKE 的 ComplEx 实现传送门：:py:class:`unike.module.model.ComplEx`
+UniKE 的 ComplEx 实现传送门：:py:class:`unike.module.model.ComplEx`
 
 .. _analogy:
 
@@ -360,7 +360,7 @@ ANALOGY
 
 :math:`\theta` 是模型的参数。
 
-pybind11-OpenKE 的 ANALOGY 实现传送门：:py:class:`unike.module.model.Analogy`
+UniKE 的 ANALOGY 实现传送门：:py:class:`unike.module.model.Analogy`
 
 .. _simple:
 
@@ -386,7 +386,7 @@ SimplE
 
 .. Important:: 平均倒数排名（mean reciprocal rank，MRR(filter)）比平均排名（mean rank，MR(filter)）更具有鲁棒性，由于仅仅 1 个坏的 rank 能够很大的影响 MR。
 
-pybind11-OpenKE 的 DistMult 实现传送门：:py:class:`unike.module.model.SimplE`
+UniKE 的 DistMult 实现传送门：:py:class:`unike.module.model.SimplE`
 
 图神经网络模型
 ----------------------------------
@@ -436,7 +436,7 @@ R-GCN 模型中第 :math:`(l+1)` 层的节点 :math:`i` 的隐藏表示计算如
 
 链接预测时，R-GCN 作为编码器输出实体的表示，关系的表示来自于 ``DistMult`` 模型。损失函数为 :py:class:`torch.nn.BCEWithLogitsLoss`。
 
-pybind11-OpenKE 的 RGCN 实现传送门：:py:class:`unike.module.model.RGCN`
+UniKE 的 RGCN 实现传送门：:py:class:`unike.module.model.RGCN`
 
 .. _compgcn:
 
@@ -517,4 +517,4 @@ CompGCN
 
 对于训练链接预测模型，使用带有标签平滑的标准二元交叉熵损失，损失函数为 :py:class:`torch.nn.BCELoss`。
 
-pybind11-OpenKE 的 CompGCN 实现传送门：:py:class:`unike.module.model.CompGCN`
+UniKE 的 CompGCN 实现传送门：:py:class:`unike.module.model.CompGCN`
