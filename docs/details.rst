@@ -4,7 +4,7 @@
 SimplE
 ---------
 
-`OpenKE-PyTorch <https://github.com/thunlp/OpenKE/tree/OpenKE-PyTorch>`__ 实现的 `SimplE <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/SimplE.py>`__ 存在问题。
+`OpenKE-PyTorch <https://github.com/thunlp/OpenKE/tree/OpenKE-PyTorch>`__ 实现的 `SimplE <https://github.com/CPU-DS/UniKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/SimplE.py>`__ 存在问题。
 下面是 ``SimplE`` :cite:`SimplE` 的作者给出的声明：
 
 .. Important::
@@ -29,7 +29,7 @@ HolE
 ---------
 
 .. WARNING:: 由于 :py:class:`unike.module.model.HolE` 的
-    :py:meth:`unike.module.model.HolE._ccorr` （`OpenKE-PyTorch 的原始实现 <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/HolE.py#L60>`__）需要
+    :py:meth:`unike.module.model.HolE._ccorr` （`OpenKE-PyTorch 的原始实现 <https://github.com/CPU-DS/UniKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/HolE.py#L60>`__）需要
     `torch.rfft <https://pytorch.org/docs/1.7.0/generated/torch.rfft.html#torch.rfft>`_ 和 `torch.ifft <https://pytorch.org/docs/1.7.0/generated/torch.ifft.html#torch.ifft>`_ 分别计算实数到复数离散傅里叶变换和复数到复数离散傅立叶逆变换。
     ``pytorch`` 在版本 ``1.8.0`` 移除了上述两个函数，并且在版本 ``1.7.0`` 给出了警告。
     因此，需要适配到更高版本的 ``pytorch``。
@@ -42,7 +42,7 @@ RESCAL
 ---------
 
 我去掉了原始 `OpenKE-PyTorch <https://github.com/thunlp/OpenKE/tree/OpenKE-PyTorch>`__ 的 ``RESCAL`` 的
-`predict <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/RESCAL.py#L45>`__ 的
+`predict <https://github.com/CPU-DS/UniKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/RESCAL.py#L45>`__ 的
 负号，原因如下：
 
 由于 :py:class:`unike.module.model.RESCAL` 采用 :py:class:`unike.module.loss.MarginLoss` 进行训练，因此需要正样本评分函数的得分应小于负样本评分函数的得分，
@@ -57,7 +57,7 @@ ANALOGY
 ---------
 
 我去掉了原始 `OpenKE-PyTorch <https://github.com/thunlp/OpenKE/tree/OpenKE-PyTorch>`__ 的 ``Analogy`` 的
-`_calc <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/Analogy.py#L27>`__ 的
+`_calc <https://github.com/CPU-DS/UniKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/Analogy.py#L27>`__ 的
 负号，原因如下：
 
 在旧版的 `OpenKE-PyTorch <https://github.com/thunlp/OpenKE/tree/OpenKE-PyTorch(old)>`__ 中，
@@ -71,13 +71,13 @@ ANALOGY
 `Analogy <https://github.com/quark0/ANALOGY/blob/master/main.cpp#L583>`__ 3 者的
 ``score`` 函数都未带负号。从原论文中也能发现，三者的评分函数的符号应该是一致的。
 但是在新版的 `OpenKE-PyTorch <https://github.com/thunlp/OpenKE/tree/OpenKE-PyTorch>`__ 中，
-三者 `DistMult <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/DistMult.py#L40>`__、
-`ComplEx <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/ComplEx.py#L21>`__、
-`Analogy <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/Analogy.py#L27>`__ 的
+三者 `DistMult <https://github.com/CPU-DS/UniKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/DistMult.py#L40>`__、
+`ComplEx <https://github.com/CPU-DS/UniKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/ComplEx.py#L21>`__、
+`Analogy <https://github.com/CPU-DS/UniKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/Analogy.py#L27>`__ 的
 `_calc` 函数实现中，仅仅 ``Analogy`` 带了负号。
 
 因此，我最终决定去掉 `OpenKE-PyTorch <https://github.com/thunlp/OpenKE/tree/OpenKE-PyTorch>`__ 的 ``Analogy`` 的
-`_calc <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/Analogy.py#L27>`__ 的
+`_calc <https://github.com/CPU-DS/UniKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/Analogy.py#L27>`__ 的
 负号。
 
 从运行结果也没发现差异。 
