@@ -10,16 +10,16 @@ pkg_file = package.__file__
 pkg_version = str(package.__version__)
 pkg_location = os.path.dirname(os.path.dirname(pkg_file))
 
-project = 'Pybind11-OpenKE'
-author = 'LuYF-Lemon-love'
-copyright = f'2023, {author}'
+project = 'UniKE'
+author = 'CPU-DS'
+copyright = f'2024, {author}'
 
 github_user = author
-github_repo = 'pybind11-OpenKE'
-github_version = 'pybind11-OpenKE-PyTorch'
+github_repo = 'UniKE'
+github_version = 'main'
 
 github_url = f'https://github.com/{github_user}/{github_repo}/'
-gh_page_url = f'https://pybind11-openke.readthedocs.io/zh-cn/latest/'
+gh_page_url = f'https://github.com/CPU-DS'
 # gh_page_url = f'https://{github_user}.github.io/{github_repo}/'
 
 html_baseurl = gh_page_url
@@ -40,9 +40,8 @@ html_theme_options = {
     'github_url': github_url,
 
     'doc_items': {
-        'Blog': 'https://www.luyf-lemon-love.space/',
-        'AD-KGE': 'https://github.com/LuYF-Lemon-love/AD-KGE/',
-        'Pybind11-OpenKE': 'https://pybind11-openke.readthedocs.io/zh-cn/latest/',
+        'AD-KGE': 'https://github.com/CPU-DS/AD-KGE',
+        'UniKE': 'https://unike.readthedocs.io/zh-cn/latest/',
     },
 
     'logo': '',
@@ -74,7 +73,7 @@ sphinx_gallery_conf = {
 autosummary_generate = True
 bibtex_bibfiles = ['refs.bib']
 
-autodoc_mock_imports = ['base', 'torch', 'dgl', 'numpy', 'tqdm', 'wandb', 'accelerate']
+autodoc_mock_imports = ['torch', 'dgl', 'numpy', 'tqdm', 'wandb', 'accelerate']
 
 intersphinx_mapping = {
     'rtd': ('https://docs.readthedocs.io/en/stable/', None),
