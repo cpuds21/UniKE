@@ -45,7 +45,7 @@ RESCAL
 `predict <https://github.com/CPU-DS/UniKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/RESCAL.py#L45>`__ 的
 负号，原因如下：
 
-.. WARNING:: 下面的内容是使用 **1.0.0 版本** 实现陈述的，与 **2.0.0 版本** 不相符合。
+.. WARNING:: 下面的内容是使用 **1.0.0 版本** 的实现进行陈述的，与 **2.0.0 版本** 不相符合。
 
 由于 :py:class:`unike.module.model.RESCAL` 采用 :py:class:`unike.module.loss.MarginLoss` 进行训练，因此需要正样本评分函数的得分应小于负样本评分函数的得分，
 :py:class:`unike.module.model.RESCAL` 的评分函数需要添加负号即 :py:meth:`unike.module.model.RESCAL._calc` 需要添加负号；
