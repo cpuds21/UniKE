@@ -37,7 +37,8 @@ html_theme_options = {
     'includehidden': True,
     'display_version': True,
     
-    'github_url': github_url,
+    # 'github_url': github_url,
+    'github_url': gh_page_url,
 
     'doc_items': {
         'AD-KGE': 'https://github.com/CPU-DS/AD-KGE',
