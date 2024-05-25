@@ -45,9 +45,11 @@ RESCAL
 `predict <https://github.com/CPU-DS/UniKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/RESCAL.py#L45>`__ 的
 负号，原因如下：
 
+.. WARNING:: 下面的内容是使用 **1.0.0 版本** 实现陈述的，与 **2.0.0 版本** 不相符合。
+
 由于 :py:class:`unike.module.model.RESCAL` 采用 :py:class:`unike.module.loss.MarginLoss` 进行训练，因此需要正样本评分函数的得分应小于负样本评分函数的得分，
 :py:class:`unike.module.model.RESCAL` 的评分函数需要添加负号即 :py:meth:`unike.module.model.RESCAL._calc` 需要添加负号；
-由于 pybind11-OpenKE 使用底层 C++ 模块进行评估模型性能，该模块需要正样本的得分小于负样本的得分，
+由于 UniKE 使用底层 C++ 模块进行评估模型性能，该模块需要正样本的得分小于负样本的得分，
 因此 :py:meth:`unike.module.model.RESCAL.predict` 不需要在 :py:meth:`unike.module.model.RESCAL.forward` 返回的结果上添加负号。
 
 .. Important::
@@ -74,7 +76,7 @@ ANALOGY
 三者 `DistMult <https://github.com/CPU-DS/UniKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/DistMult.py#L40>`__、
 `ComplEx <https://github.com/CPU-DS/UniKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/ComplEx.py#L21>`__、
 `Analogy <https://github.com/CPU-DS/UniKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/Analogy.py#L27>`__ 的
-`_calc` 函数实现中，仅仅 ``Analogy`` 带了负号。
+``_calc`` 函数实现中，仅仅 ``Analogy`` 带了负号。
 
 因此，我最终决定去掉 `OpenKE-PyTorch <https://github.com/thunlp/OpenKE/tree/OpenKE-PyTorch>`__ 的 ``Analogy`` 的
 `_calc <https://github.com/CPU-DS/UniKE/blob/thunlp-OpenKE-PyTorch/openke/module/model/Analogy.py#L27>`__ 的
