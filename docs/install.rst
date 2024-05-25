@@ -9,7 +9,7 @@ Pip
 .. prompt:: bash
 
     pip install dgl
-    pip install git+https://github.com/LuYF-Lemon-love/pybind11-OpenKE.git
+    pip install git+https://github.com/CPU-DS/UniKE.git
 
 2. 验证:
 
@@ -23,12 +23,12 @@ Pip
 Linux
 ----------------------------------
 
-1. 克隆 pybind11-OpenKE-PyTorch 分支。
+1. 克隆 main 分支。
 
 .. prompt:: bash
 
-    git clone -b main git@github.com:LuYF-Lemon-love/pybind11-OpenKE.git --depth 1
-    cd pybind11-OpenKE/
+    git clone -b main git@github.com:CPU-DS/UniKE.git --depth 1
+    cd UniKE/
     python -m venv env
     source env/bin/activate
     which python
@@ -46,12 +46,12 @@ Linux
 Windows
 ----------------------------------
 
-1. 克隆 pybind11-OpenKE-PyTorch 分支。
+1. 克隆 main 分支。
 
 .. prompt:: bash
 
-    git clone -b main git@github.com:LuYF-Lemon-love/pybind11-OpenKE.git --depth 1
-    cd pybind11-OpenKE/
+    git clone -b main git@github.com:CPU-DS/UniKE.git --depth 1
+    cd UniKE/
     py -m venv env
     .\env\Scripts\activate
     pip install --upgrade pip

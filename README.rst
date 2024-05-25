@@ -1,7 +1,7 @@
-.. figure:: https://cdn.jsdelivr.net/gh/LuYF-Lemon-love/pybind11-OpenKE@main/docs/_static/images/logo-best.svg
-    :alt: pybind11-OpenKE logo
+.. figure:: https://cdn.jsdelivr.net/gh/CPU-DS/UniKE@main/docs/_static/images/logo-best.svg
+    :alt: UniKE logo
 
-pybind11-OpenKE — 知识图谱嵌入工具包
+UniKE — 知识图谱嵌入工具包
 ----------------------------------------------
 
 .. image:: https://readthedocs.org/projects/pybind11-openke/badge/?version=latest
@@ -12,30 +12,30 @@ pybind11-OpenKE — 知识图谱嵌入工具包
 
 教程和 API 参考文档可以访问 
 `pybind11-openke.readthedocs.io <https://pybind11-openke.readthedocs.io/zh_CN/latest/>`_。
-源代码可以访问 `github.com/LuYF-Lemon-love/pybind11-OpenKE <https://github.com/LuYF-Lemon-love/pybind11-OpenKE>`_。
+源代码可以访问 `github.com/CPU-DS/UniKE <https://github.com/CPU-DS/UniKE>`_。
 
-📁 `pybind11_ke/ <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/tree/main/pybind11_ke/>`_
-    pybind11-OpenKE 源代码保存在 ``pybind11_ke/``。
+📁 `pybind11_ke/ <https://github.com/CPU-DS/UniKE/tree/main/pybind11_ke/>`_
+    UniKE 源代码保存在 ``pybind11_ke/``。
 
-📚 `docs/ <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/tree/main/docs/>`_
+📚 `docs/ <https://github.com/CPU-DS/UniKE/tree/main/docs/>`_
     所有的文档源文件保存在 ``docs/``。 所有的 ``*.rst`` 构成了文档中的各个部分。
 
-🌰 `examples/ <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/tree/main/examples/>`_
-    pybind11-OpenKE 的例子保存在 ``examples/``，修改自 ``OpenKE-PyTorch``。
+🌰 `examples/ <https://github.com/CPU-DS/UniKE/tree/main/examples/>`_
+    UniKE 的例子保存在 ``examples/``，修改自 ``OpenKE-PyTorch``。
 
-📍 `logs/ <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/tree/main/logs/>`_
-    pybind11-OpenKE 的例子运行日志保存在 ``logs/``。
+📍 `logs/ <https://github.com/CPU-DS/UniKE/tree/main/logs/>`_
+    UniKE 的例子运行日志保存在 ``logs/``。
 
-💡 `benchmarks/ <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/tree/main/benchmarks/>`_
+💡 `benchmarks/ <https://github.com/CPU-DS/UniKE/tree/main/benchmarks/>`_
     常用的知识图谱保存在 ``benchmarks/``。
 
-📜 `README.rst <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/tree/main/README.rst>`_
+📜 `README.rst <https://github.com/CPU-DS/UniKE/tree/main/README.rst>`_
     项目主页。
     
 ⁉️ Questions / comments
-    如果你有任何问题，可以在 `Github issue <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/issues>`_ 提问。
+    如果你有任何问题，可以在 `Github issue <https://github.com/CPU-DS/UniKE/issues>`_ 提问。
 
-.. Note:: 本项目基于 OpenKE-PyTorch 的版本保存在 `thunlp-OpenKE-PyTorch <https://github.com/LuYF-Lemon-love/pybind11-OpenKE/tree/thunlp-OpenKE-PyTorch>`_ 分支。
+.. Note:: 本项目基于 OpenKE-PyTorch 的版本保存在 `thunlp-OpenKE-PyTorch <https://github.com/CPU-DS/UniKE/tree/thunlp-OpenKE-PyTorch>`_ 分支。
 
 新特性
 ------------
@@ -62,7 +62,7 @@ pybind11-OpenKE — 知识图谱嵌入工具包
 
 **高效的**
 
-- 使用 :py:class:`torch.nn.parallel.DistributedDataParallel` 完成数据并行（ **2.0.0 版本** 使用 `accelerate <https://github.com/huggingface/accelerate>`_ 实现），使得 ``pybind11-OpenKE`` 能够利用多个 ``GPU`` 同时训练。
+- 使用 :py:class:`torch.nn.parallel.DistributedDataParallel` 完成数据并行（ **2.0.0 版本** 使用 `accelerate <https://github.com/huggingface/accelerate>`_ 实现），使得 ``UniKE`` 能够利用多个 ``GPU`` 同时训练。
 
 - 增加超参数扫描功能（随机搜索、网格搜索和贝叶斯搜索）。
 
@@ -96,15 +96,15 @@ pybind11-OpenKE — 知识图谱嵌入工具包
 如何引用这个项目？
 ---------------------------
 
-如果您发现 pybind11-OpenKE 对您的研究有用，请考虑使用以下 BibTeX 模板引用 pybind11-OpenKE：
+如果您发现 UniKE 对您的研究有用，请考虑使用以下 BibTeX 模板引用 pybind11-OpenKE：
 
 ::
 
-    @misc{pybind11-OpenKE,
+    @misc{UniKE,
        author = {Lu, Yanfeng and Hou, Fengzhen},
        year = {2024},
-       note = {https://github.com/LuYF-Lemon-love/pybind11-OpenKE},
-       title = {pybind11-OpenKE: An Open Source Library for Knowledge Graph Embeddings}
+       note = {https://github.com/CPU-DS/UniKE},
+       title = {UniKE: An Open Source Library for Knowledge Graph Embeddings}
     }
 
 
