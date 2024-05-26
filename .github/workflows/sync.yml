@@ -16,6 +16,3 @@ jobs:
           owner: CPU-DS
           base: main
           head: main
-
-notifications:
-  workflow_dispatch: none

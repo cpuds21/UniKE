@@ -3,7 +3,7 @@
 # unike/module/model/CompGCN.py
 #
 # created by LuYF-Lemon-love <luyanfeng_nlp@qq.com> on Jan 19, 2023
-# updated by LuYF-Lemon-love <luyanfeng_nlp@qq.com> on May 23, 2024
+# updated by LuYF-Lemon-love <luyanfeng_nlp@qq.com> on May 26, 2024
 #
 # 该脚本定义了 CompGCN 类.
 
@@ -399,10 +399,10 @@ class CompGCNCov(nn.Module):
         rel_emb: torch.nn.parameter.Parameter,
         edge_type: torch.Tensor,
         edge_norm: torch.Tensor) -> tuple[torch.nn.parameter.Parameter, torch.nn.parameter.Parameter]:
-
+        
         """
-		定义每次调用时执行的计算。
-		:py:class:`torch.nn.Module` 子类必须重写 :py:meth:`torch.nn.Module.forward`。
+        定义每次调用时执行的计算。
+        :py:class:`torch.nn.Module` 子类必须重写 :py:meth:`torch.nn.Module.forward`。
         
         :param graph: 子图
         :type graph: dgl.DGLGraph
@@ -416,7 +416,7 @@ class CompGCNCov(nn.Module):
         :type norm: torch.Tensor
         :returns: 更新后的实体嵌入和关系嵌入
         :rtype: tuple[torch.nn.parameter.Parameter, torch.nn.parameter.Parameter]
-		"""
+        """
 
         graph = graph.local_var()
         graph.ndata['h'] = ent_emb
