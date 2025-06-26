@@ -21,3 +21,5 @@ best_network.pth
 model.pth
 transr_transe.json
 test.py
+
+.venv

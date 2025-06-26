@@ -8,16 +8,17 @@ Pip
 
 .. prompt:: bash
 
-    pip install dgl
     pip install git+https://github.com/CPU-DS/UniKE.git
+    uv pip install dgl
+    uv sync
 
-2. 验证:
+1. 验证:
 
 ::
 
     >>> import unike
     >>> unike.__version__
-    '3.0.0'
+    '3.0.1'
     >>>
 
 Linux
@@ -29,14 +30,10 @@ Linux
 
     git clone -b main git@github.com:CPU-DS/UniKE.git --depth 1
     cd UniKE/
-    python -m venv env
-    source env/bin/activate
-    which python
-    pip install --upgrade pip
-    pip install dgl
-    pip install . -i https://pypi.tuna.tsinghua.edu.cn/simple
+    uv pip install dgl
+    uv sync
 
-2. 快速开始。
+1. 快速开始。
 
 .. prompt:: bash
 
@@ -52,13 +49,10 @@ Windows
 
     git clone -b main git@github.com:CPU-DS/UniKE.git --depth 1
     cd UniKE/
-    py -m venv env
-    .\env\Scripts\activate
-    pip install --upgrade pip
-    pip install dgl
-    pip install . -i https://pypi.tuna.tsinghua.edu.cn/simple
+    uv pip install dgl
+    uv sync
 
-2. 快速开始。
+1. 快速开始。
 
 .. prompt:: bash
 
