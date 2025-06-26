@@ -4,28 +4,25 @@
 
 基于 [OpenKE-PyTorch](https://github.com/thunlp/OpenKE/tree/OpenKE-PyTorch) 开发的知识图谱嵌入工具包，支持跨平台运行，具备自动超参数搜索、高效并行训练以及实验结果记录功能，为研究与应用提供强大助力。
 
-教程和 API 参考文档可以访问 [unike.readthedocs.io](https://unike.readthedocs.io/zh_CN/latest/)。  
-源代码可以访问 [github.com/CPU-DS/UniKE](https://github.com/CPU-DS/UniKE)。
+教程和 API 参考文档可以访问 [unike.readthedocs.io](https://unike.readthedocs.io/zh_CN/latest/)。
+
+## 项目结构
 
 - 📁 [`unike/`](https://github.com/CPU-DS/UniKE/tree/main/unike/)  
-  UniKE 源代码保存在 `unike/`。
+  UniKE 源代码保存在 `unike/`
 - 📚 [`docs/`](https://github.com/CPU-DS/UniKE/tree/main/docs/)  
-  所有的文档源文件保存在 `docs/`。所有的 `*.rst` 构成了文档中的各个部分。
+  所有的文档源文件保存在 `docs/`，所有的 `*.rst` 构成了文档中的各个部分
 - 🌰 [`examples/`](https://github.com/CPU-DS/UniKE/tree/main/examples/)  
-  UniKE 的例子保存在 `examples/`，修改自 `OpenKE-PyTorch`。
+  UniKE 的例子保存在 `examples/`，修改自 `OpenKE-PyTorch`
 - 📍 [`docs/_static/logs/`](https://github.com/CPU-DS/UniKE/tree/main/docs/_static/logs/)  
-  UniKE 的例子运行日志保存在 `docs/_static/logs/`。
+  UniKE 的例子运行日志保存在 `docs/_static/logs/`
 - 💡 [`benchmarks/`](https://github.com/CPU-DS/UniKE/tree/main/benchmarks/)  
-  常用的知识图谱保存在 `benchmarks/`。
+  常用的知识图谱保存在 `benchmarks/`
 - 📜 [`README.rst`](https://github.com/CPU-DS/UniKE/tree/main/README.rst)  
-  项目主页。
+  项目主页
 
 ### ⁉️ Questions / comments
 如果你有任何问题，可以在 [Github issue](https://github.com/CPU-DS/UniKE/issues) 提问。
-
-> **Note**: 本项目基于 OpenKE-PyTorch 的版本保存在 [thunlp-OpenKE-PyTorch](https://github.com/CPU-DS/UniKE/tree/thunlp-OpenKE-PyTorch) 分支。
-
----
 
 ## 快速开始
 
@@ -35,8 +32,6 @@ cd UniKE
 uv pip install dgl
 uv sync
 ```
-
----
 
 ## 新特性
 
@@ -68,11 +63,11 @@ uv sync
 
 ## 支持的知识图谱嵌入模型
 
-| 类型         | 模型                                                                                       |
-| ------------ | ------------------------------------------------------------------------------------------ |
-| 平移模型     | `TransE`, `TransH`, `TransR`, `TransD`, `RotatE`                      |
-| 语义匹配模型 | `RESCAL`, `DistMult`, `HolE`, `ComplEx`, `Analogy`, `SimplE`  |
-| 图神经网络模型 | `R-GCN`, `CompGCN`|
+| 类型 | 模型 |
+| --- | --- |
+| 平移模型 | `TransE`, `TransH`, `TransR`, `TransD`, `RotatE` |
+| 语义匹配模型 | `RESCAL`, `DistMult`, `HolE`, `ComplEx`, `Analogy`, `SimplE`, `ANALOGY` |
+| 图神经网络模型 | `R-GCN`, `CompGCN` |
 
 ## 如何引用这个项目？
 
