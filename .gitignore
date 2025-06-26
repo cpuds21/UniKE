@@ -23,3 +23,5 @@ transr_transe.json
 test.py
 
 .venv
+dist
+build.sh

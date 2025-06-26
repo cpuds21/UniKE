@@ -26,11 +26,17 @@
 
 ## 快速开始
 
+使用 `pip`
 ```bash
-git clone https://github.com/CPU-DS/UniKE.git
-cd UniKE
+pip install dgl
+pip install unike
+```
+
+或使用 `uv`
+
+```bash
 uv pip install dgl
-uv sync
+uv add unike
 ```
 
 ## 新特性
