@@ -36,8 +36,8 @@
 
     git clone https://github.com/CPU-DS/UniKE.git
     cd UniKE/
-    uv pip install dgl
     uv sync
+    uv pip install dgl
 
 2. 快速开始：
 
