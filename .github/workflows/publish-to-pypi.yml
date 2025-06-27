@@ -1,0 +1,21 @@
+name: publish python distributions to PyPI
+
+on:
+  push:
+    paths:
+      - 'src/unike/version.py'
+  workflow_dispatch:
+
+jobs:
+  pypi:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+    environment:
+      name: release
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv build
+      - run: uv publish --token ${{ secrets.PYPI_API_TOKEN }}

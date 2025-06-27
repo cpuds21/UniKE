@@ -1,18 +1,13 @@
-import os
-import sys
-sys.path.insert(0, os.path.abspath('./'))
-sys.path.insert(0, os.path.abspath('../'))
-
+from datetime import datetime
 import unike as package
 
 pkg_name = package.__name__
 pkg_file = package.__file__
-pkg_version = str(package.__version__)
-pkg_location = os.path.dirname(os.path.dirname(pkg_file))
+pkg_version = package.__version__
 
 project = 'UniKE'
 author = 'CPU-DS'
-copyright = f'2024, {author}'
+copyright = f'2024-{datetime.now().year}, {author}'
 
 github_user = author
 github_repo = 'UniKE'

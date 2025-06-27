@@ -21,3 +21,11 @@ best_network.pth
 model.pth
 transr_transe.json
 test.py
+
+.venv/
+dist/
+build.sh
+
+.vscode/
+.DS_Store
+.idea/
