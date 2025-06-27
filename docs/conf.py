@@ -1,4 +1,10 @@
 from datetime import datetime
+
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '../src'))
+
 import unike as package
 
 pkg_name = package.__name__
