@@ -28,15 +28,7 @@
 
 使用 `pip`
 ```bash
-pip install dgl
 pip install unike
-```
-
-或使用 `uv`
-
-```bash
-uv pip install dgl
-uv add unike
 ```
 
 ## 新特性
