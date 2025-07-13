@@ -137,7 +137,7 @@ class Link:
 
         df = pd.DataFrame(sorted_triples.tolist(), columns=["head", "rel", "tail"])
         df["score"] = sorted_scores.tolist()
-        df["in"] = df.apply(lambda row: (row.head, row.rel, row.tail) in self.all, axis=1)
+        df["in"] = df.apply(lambda row: (row['head'], row['rel'], row['tail']) in self.all, axis=1)
         df["head_ent"] = df["head"].map(self.id2ent)
         df["rel_ent"] = df["rel"].map(self.id2rel)
         df["tail_ent"] = df["tail"].map(self.id2ent)
