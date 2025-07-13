@@ -78,15 +78,15 @@ class Link:
         
         """读取 :py:attr:`all_file` 文件。"""
         
-        self.all = []
+        self.all = set()
         with open(os.path.join(self.in_path, self.all_file)) as f:
             _ = f.readline()
             for line in f:
                 head, tail, rel = line.strip().split()
-                self.all.append((int(head), int(rel), int(tail)))
+                self.all.add((int(head), int(rel), int(tail)))
         
         
-    def link(self, head_ids: list[int], rel_ids: list[int], tail_ids: list[int], topk: int = 50, device: str = 'cpu') -> pd.DataFrame:
+    def link(self, head_ids: list[int], rel_ids: list[int], tail_ids: list[int], device: str = 'cpu') -> pd.DataFrame:
         
         """对给定的头实体、关系和尾实体进行组合并计算链接分数。
         
@@ -98,8 +98,6 @@ class Link:
         :type tail_ids: list[int]
         :returns: 结果数据框
         :rtype: pd.DataFrame
-        :param topk: 返回的 topk 个结果
-        :type topk: int
         :param device: 设备
         :type device: str
         """
@@ -137,17 +135,11 @@ class Link:
         sorted_scores, indices = torch.sort(scores.squeeze(), descending=True)
         sorted_triples = triples[indices]
 
-        triples = list(tuple(triple) for triple in sorted_triples.tolist()[:topk])
-        scores = sorted_scores.tolist()[:topk]
-
-        result = [[   
-                    head, rel, tail, 
-                    tuple([head, rel, tail]) in self.all, 
-                    self.id2ent[head], self.id2rel[rel], self.id2ent[tail],
-                    scores[idx]
-            ]
-            for idx, (head, rel, tail) in enumerate(triples)
-        ]
+        df = pd.DataFrame(sorted_triples.tolist(), columns=["head", "rel", "tail"])
+        df["score"] = sorted_scores.tolist()
+        df["in"] = df.apply(lambda row: (row.head, row.rel, row.tail) in self.all, axis=1)
+        df["head_ent"] = df["head"].map(self.id2ent)
+        df["rel_ent"] = df["rel"].map(self.id2rel)
+        df["tail_ent"] = df["tail"].map(self.id2ent)
         
-        df = pd.DataFrame(result, columns=["head", "rel", "tail", "in", "head_ent", "rel_ent", "tail_ent", "score"])
         return df
