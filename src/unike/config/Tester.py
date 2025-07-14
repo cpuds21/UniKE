@@ -19,11 +19,7 @@ import numpy as np
 from tqdm import tqdm
 from ..module.model import Model
 from ..data import KGEDataLoader
-import logging
-
-logger = logging.getLogger(__name__)
-logging.basicConfig(format='%(levelname)s:%(module)s:%(asctime)s:%(message)s',
-					datefmt='%Y-%m-%d %H:%M:%S', level=logging.DEBUG)
+from loguru import logger
 
 class Tester(object):
 

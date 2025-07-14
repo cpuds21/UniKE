@@ -49,7 +49,7 @@ from unike.config import Trainer, Tester
 # 首先初始化 :py:class:`unike.utils.WandbLogger` 日志记录器，它是对 wandb 初始化操作的一层简单封装。
 
 wandb_logger = WandbLogger(
-	project="pybind11-ke",
+	project="pybind11-ke",	
 	name="TransE-FB15K-multi",
 	config=dict(
 		in_path = os.path.join(os.path.dirname(__file__), '../../benchmarks/FB15K/'),

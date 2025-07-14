@@ -25,11 +25,7 @@ from torch.utils.data import DataLoader
 from ..utils.EarlyStopping import EarlyStopping
 from ..module.strategy import Strategy
 from accelerate import Accelerator
-import logging
-
-logger = logging.getLogger(__name__)
-logging.basicConfig(format='%(levelname)s:%(module)s:%(asctime)s:%(message)s',
-					datefmt='%Y-%m-%d %H:%M:%S', level=logging.DEBUG)
+from loguru import logger
 
 class Trainer(object):
 

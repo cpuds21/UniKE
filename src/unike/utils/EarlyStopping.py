@@ -14,11 +14,7 @@ EarlyStopping - 使用早停止避免过拟合。
 import os
 import numpy as np
 from ..module.model import Model
-import logging
-
-logger = logging.getLogger(__name__)
-logging.basicConfig(format='%(levelname)s:%(module)s:%(asctime)s:%(message)s',
-					datefmt='%Y-%m-%d %H:%M:%S', level=logging.DEBUG)
+from loguru import logger
 
 class EarlyStopping:
 

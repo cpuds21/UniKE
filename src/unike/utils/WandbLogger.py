@@ -13,13 +13,10 @@ WandbLogger - 使用 Weights and Biases 记录实验结果。
 
 import typing
 import wandb
-import logging
 import swanlab
 from typing import Literal
 from accelerate import Accelerator
 from types import SimpleNamespace
-
-logging.basicConfig(level=logging.INFO)
 
 class WandbLogger:
 
@@ -50,6 +47,11 @@ class WandbLogger:
         self.accelerator = None
 
     def _init(self, accelerator: Accelerator = None):
+        """初始化日志
+        
+        :param accelerator: :py:class:`accelerate.Accelerator` 对象
+        :type accelerator: :py:class:`accelerate.Accelerator`
+        """
         if accelerator:
             self.accelerator = accelerator
             self.logger = self.accelerator
@@ -61,11 +63,11 @@ class WandbLogger:
             self.logger = swanlab
 
     def log(self, *args, **kwargs):
-        """ 记录日志 """
+        """记录日志"""
         self.logger.log(*args, **kwargs)
     
     def finish(self):
-        """关闭 wandb"""
+        """关闭日志"""
         if self.accelerator:
             self.accelerator.end_training()
         elif self.endpoint == 'wandb':

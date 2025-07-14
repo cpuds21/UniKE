@@ -19,11 +19,7 @@ from ..module.loss import MarginLoss
 from ..module.strategy import NegativeSampling
 from ..config import Trainer, Tester
 from ..data import KGEDataLoader
-import logging
-
-logger = logging.getLogger(__name__)
-logging.basicConfig(format='%(levelname)s:%(module)s:%(asctime)s:%(message)s',
-					datefmt='%Y-%m-%d %H:%M:%S', level=logging.DEBUG)
+from loguru import logger
 
 def set_hpo_config(
 	method: str = 'bayes',
