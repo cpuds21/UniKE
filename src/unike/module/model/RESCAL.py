@@ -98,7 +98,7 @@ class RESCAL(Model):
 			lr = config.lr, opt_method = config.opt_method, use_gpu = config.use_gpu, device = config.device,
 			tester = tester, test = config.test, valid_interval = config.valid_interval,
 			log_interval = config.log_interval, save_interval = config.save_interval,
-			save_path = config.save_path, use_wandb = True)
+			save_path = config.save_path, wandb_logger = wandb_logger)
 		trainer.run()
 	"""
 

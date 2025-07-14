@@ -16,6 +16,8 @@ import wandb
 import logging
 import swanlab
 from typing import Literal
+from accelerate import Accelerator
+from types import SimpleNamespace
 
 logging.basicConfig(level=logging.INFO)
 
@@ -27,7 +29,7 @@ class WandbLogger:
         project: str ="pybind11-ke",
         name: str = "transe",
         config: dict[str, typing.Any] | None = None,
-        use: Literal['wandb', 'swanlab', 'both'] = 'wandb'):
+        endpoint: Literal['wandb', 'swanlab'] = 'wandb'):
 
         """创建 WandbLogger 对象。
         
@@ -37,21 +39,36 @@ class WandbLogger:
         :type name: str
         :param config: wandb 的项目配置如超参数。
         :type config: dict[str, typing.Any] | None
-        :param use: 使用 wandb 还是 swanlab 记录实验结果
-        :type use: Literal['wandb', 'swanlab', 'both']
+        :param endpoint: 使用 wandb 还是 swanlab 记录实验结果
+        :type endpoint: Literal['wandb', 'swanlab']
         """
+        self.project = project
+        self.name = name
+        self.endpoint = endpoint
+        self.config: SimpleNamespace = SimpleNamespace(**config)
         
-        if use != 'wandb':
-            wandb_run = False if use == 'swanlab' else True
-            swanlab.sync_wandb(wandb_run=wandb_run)
+        self.accelerator = None
 
-        wandb.init(project=project, name=name, config=config)
-        
-        #: config 的副本
-        self.config: dict = wandb.config
+    def _init(self, accelerator: Accelerator = None):
+        if accelerator:
+            self.accelerator = accelerator
+            self.logger = self.accelerator
+        elif self.endpoint == 'wandb':
+            wandb.init(project=self.project, name=self.name, config=self.config)
+            self.logger = wandb
+        elif self.endpoint == 'swanlab':
+            swanlab.init(project=self.project, name=self.name, config=self.config)
+            self.logger = swanlab
+
+    def log(self, *args, **kwargs):
+        """ 记录日志 """
+        self.logger.log(*args, **kwargs)
     
     def finish(self):
-
         """关闭 wandb"""
-
-        wandb.finish()
+        if self.accelerator:
+            self.accelerator.end_training()
+        elif self.endpoint == 'wandb':
+            wandb.finish()
+        elif self.endpoint == 'swanlab':
+            swanlab.finish()

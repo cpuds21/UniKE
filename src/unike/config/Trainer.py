@@ -20,6 +20,7 @@ from .Tester import Tester
 import torch.optim as optim
 from ..utils.Timer import Timer
 from ..module.model import Model
+from ..utils import WandbLogger
 from torch.utils.data import DataLoader
 from ..utils.EarlyStopping import EarlyStopping
 from ..module.strategy import Strategy
@@ -102,7 +103,7 @@ class Trainer(object):
 		metric: str = 'hits@10',
 		patience: int = 2,
 		delta: float = 0,
-		use_wandb: bool = False):
+		wandb_logger: WandbLogger = None):
 
 		"""创建 Trainer 对象。
 
@@ -142,8 +143,8 @@ class Trainer(object):
 		:type patience: int
 		:param delta: :py:attr:`unike.utils.EarlyStopping.delta` 参数，监测数量的最小变化才符合改进条件。默认值：0
 		:type delta: float
-		:param use_wandb: 是否启用 wandb 进行日志输出
-		:type use_wandb: bool
+		:param wandb_logger: :py:class:`unike.utils.WandbLogger` 对象
+		:type wandb_logger: :py:class:`unike.utils.WandbLogger`
 		"""
 		
 		#: 包装 KGE 模型的训练策略类，即 :py:class:`unike.module.strategy.Strategy`
@@ -196,8 +197,10 @@ class Trainer(object):
 		#: 早停对象
 		self.early_stopping: EarlyStopping = None
 
-		#: 是否启用 wandb 进行日志输出
-		self.use_wandb: bool = use_wandb
+		#: :py:class:`unike.utils.WandbLogger` 对象
+		self.wandb_logger: WandbLogger = wandb_logger
+		if self.wandb_logger:
+			self.wandb_logger._init(self.accelerator)
 
 	def configure_optimizers(self):
 
@@ -273,12 +276,7 @@ class Trainer(object):
 		self.configure_optimizers()
 		
 		logger.info(f"[{self.get_device()}] Initialization completed, start model training.")
-		
-		if self.use_wandb:
-			if not self.accelerator:
-				wandb.watch(self.model.model, log_freq=100)
-			else:
-				wandb.watch(self.model.module.model, log_freq=100)
+
 		
 		timer = Timer()
 
@@ -321,16 +319,16 @@ class Trainer(object):
 				break
 			
 			if self.log_interval and (epoch + 1) % self.log_interval == 0:
-				if self.is_local_main_process() and self.use_wandb:
-					wandb.log({"train/train_loss" : res, "train/epoch" : epoch + 1})
+				if self.is_local_main_process() and self.wandb_logger:
+					self.wandb_logger.log({"train/train_loss" : res, "train/epoch" : epoch + 1})
 				logger.info(f"[{self.get_device()}] Epoch [{epoch+1:>4d}/{self.epochs:>4d}] | Batchsize: {self.data_loader.batch_size} | loss: {res:>9f} | {timer.avg():.5f} seconds/epoch")
 		
 		logger.info(f"[{self.get_device()}] The model training is completed, taking a total of {timer.sum():.5f} seconds.")
 
 		if self.is_local_main_process():
 
-			if self.use_wandb:
-				wandb.log({"duration" : timer.sum()})
+			if self.wandb_logger:
+				self.wandb_logger.log({"duration" : timer.sum()})
 
 			if self.save_path:
 				self.get_model().save_checkpoint(self.save_path)
@@ -361,13 +359,13 @@ class Trainer(object):
 		results = self.tester.run_link_prediction()
 		for key, value in results.items():
 			logger.info(f"{key}: {value}")
-		if self.use_wandb:
+		if self.wandb_logger:
 			log_dict = {f"{mode}/{key}" : value for key, value in results.items()}
 			if sampling_mode == "link_valid":
 				log_dict.update({
 					"val/epoch": epoch
 				})
-			wandb.log(log_dict)
+			self.wandb_logger.log(log_dict)
 				
 		if self.early_stopping is not None and sampling_mode == "link_valid":
 			if self.metric in ['mr', 'mr_type']:

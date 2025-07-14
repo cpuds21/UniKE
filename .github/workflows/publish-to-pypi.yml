@@ -2,6 +2,9 @@ name: publish python distributions to PyPI
 
 on:
   push:
+    branches:
+      - main
+      - beta/*
     paths:
       - 'src/unike/version.py'
   workflow_dispatch:

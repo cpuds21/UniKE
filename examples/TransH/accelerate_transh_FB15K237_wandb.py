@@ -142,7 +142,8 @@ model = NegativeSampling(
 
 dataloader, model, accelerator = accelerator_prepare(
     dataloader,
-    model
+    model,
+    wandb_logger=wandb_logger
 )
 
 # test the model
@@ -154,7 +155,7 @@ trainer = Trainer(model = model, data_loader = dataloader.train_dataloader(),
     accelerator = accelerator, tester = tester, test = config.test,
     valid_interval = config.valid_interval, log_interval = config.log_interval,
     save_interval = config.save_interval, save_path = config.save_path,
-    delta = config.delta, use_wandb = True)
+    delta = config.delta, wandb_logger = wandb_logger)
 trainer.run()
 
 # close your wandb run

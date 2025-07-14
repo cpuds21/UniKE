@@ -16,7 +16,7 @@
 
     >>> import unike
     >>> unike.__version__
-    '3.1.7'
+    '3.2.0.beta1'
     >>>
 
 开发
