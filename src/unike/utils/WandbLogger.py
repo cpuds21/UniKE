@@ -56,10 +56,10 @@ class WandbLogger:
             self.accelerator = accelerator
             self.logger = self.accelerator
         elif self.endpoint == 'wandb':
-            wandb.init(project=self.project, name=self.name, config=self.config)
+            wandb.init(project=self.project, name=self.name, config=self.config.__dict__)
             self.logger = wandb
         elif self.endpoint == 'swanlab':
-            swanlab.init(project=self.project, name=self.name, config=self.config)
+            swanlab.init(project=self.project, name=self.name, config=self.config.__dict__)
             self.logger = swanlab
 
     def log(self, *args, **kwargs):
