@@ -45,6 +45,7 @@ def accelerator_prepare(*args: List[Any], wandb_logger: WandbLogger = None) -> L
 				}
 			}
 		)
+		wandb_logger.set_accelerator(accelerator)
 	else:
 		accelerator = Accelerator()
 	

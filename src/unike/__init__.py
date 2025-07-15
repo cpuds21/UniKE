@@ -8,4 +8,4 @@ import sys
 from loguru import logger
 
 logger.remove()
-logger.add(sys.stdout, level="INFO", format="{time:YYYY-MM-DD HH:mm:ss} | <lvl><normal>{level: <8}</normal></lvl> | {message}")
+logger.add(sys.stdout, level="INFO", format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}")

@@ -196,7 +196,7 @@ class Trainer(object):
 		#: :py:class:`unike.utils.WandbLogger` 对象
 		self.wandb_logger: WandbLogger = wandb_logger
 		if self.wandb_logger:
-			self.wandb_logger._init(self.accelerator)
+			self.wandb_logger.init()
 
 	def configure_optimizers(self):
 
@@ -271,8 +271,7 @@ class Trainer(object):
 
 		self.configure_optimizers()
 		
-		logger.info(f"[{self.get_device()}] Initialization completed, start model training.")
-
+		logger.info(f"[{self.get_device()}]({os.getpid()}) Initialization completed, start model training.")
 		
 		timer = Timer()
 
@@ -283,7 +282,7 @@ class Trainer(object):
 				self.model.model.train()
 			else:
 				self.model.module.model.train()
-
+			
 			for data in self.data_loader:
 				loss = self.train_one_step(data)
 				res += loss
@@ -294,11 +293,11 @@ class Trainer(object):
 
 				if self.valid_interval and self.tester and \
 						(epoch + 1) % self.valid_interval == 0:
-					logger.info(f"[{self.get_device()}] Epoch {epoch+1} | The model starts evaluation on the validation set.")
+					logger.info(f"[{self.get_device()}]({os.getpid()}) Epoch {epoch+1} | The model starts evaluation on the validation set.")
 					self.print_test("link_valid", epoch)
 			
 				if self.early_stopping and self.early_stopping.early_stop:
-					logger.info(f"[{self.get_device()}] Send an early stopping signal")
+					logger.info(f"[{self.get_device()}]({os.getpid()}) Send an early stopping signal")
 					if self.accelerator:
 						self.accelerator.set_trigger()
 					else:
@@ -308,30 +307,30 @@ class Trainer(object):
 					path = os.path.join(os.path.splitext(self.save_path)[0] + "-" + str(epoch+1) + \
 								os.path.splitext(self.save_path)[-1])
 					self.get_model().save_checkpoint(path)
-					logger.info(f"[{self.get_device()}] Epoch {epoch+1} | Training checkpoint saved at {path}")
+					logger.info(f"[{self.get_device()}]({os.getpid()}) Epoch {epoch+1} | Training checkpoint saved at {path}")
 
 			if self.accelerator and self.accelerator.check_trigger():
-				logger.info(f"[{self.get_device()}] Early stopping")
+				logger.info(f"[{self.get_device()}]({os.getpid()}) Early stopping")
 				break
 			
 			if self.log_interval and (epoch + 1) % self.log_interval == 0:
-				if self.is_local_main_process() and self.wandb_logger:
+				if self.wandb_logger:
 					self.wandb_logger.log({"train/train_loss" : res, "train/epoch" : epoch + 1})
-				logger.info(f"[{self.get_device()}] Epoch [{epoch+1:>4d}/{self.epochs:>4d}] | Batchsize: {self.data_loader.batch_size} | loss: {res:>9f} | {timer.avg():.5f} seconds/epoch")
+				logger.info(f"[{self.get_device()}]({os.getpid()}) Epoch [{epoch+1:>4d}/{self.epochs:>4d}] | loss: {res:>9f} | {timer.avg():.5f} seconds/epoch")
 		
-		logger.info(f"[{self.get_device()}] The model training is completed, taking a total of {timer.sum():.5f} seconds.")
+		logger.info(f"[{self.get_device()}]({os.getpid()}) The model training is completed, taking a total of {timer.sum():.5f} seconds.")
+
+		if self.wandb_logger:
+			self.wandb_logger.log({"duration" : timer.sum()})
 
 		if self.is_local_main_process():
-
-			if self.wandb_logger:
-				self.wandb_logger.log({"duration" : timer.sum()})
-
+      
 			if self.save_path:
 				self.get_model().save_checkpoint(self.save_path)
-				logger.info(f"[{self.get_device()}] Model saved at {self.save_path}.")
+				logger.info(f"[{self.get_device()}]({os.getpid()}) Model saved at {self.save_path}.")
 
 			if self.test and self.tester:
-				logger.info(f"[{self.get_device()}] The model starts evaluating in the test set.")
+				logger.info(f"[{self.get_device()}]({os.getpid()}) The model starts evaluating in the test set.")
 				self.print_test("link_test")
 
 	def print_test(

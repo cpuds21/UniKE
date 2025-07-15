@@ -111,8 +111,8 @@ model = NegativeSampling(
 # 也可以通过传入 :py:class:`unike.config.Tester`，
 # 使得训练器能够在训练过程中评估模型。
 
-dataloader, model, accelerator = accelerator_prepare(
-    dataloader,
+train_dataloader, model, accelerator = accelerator_prepare(
+    dataloader.train_dataloader(),
     model
 )
 
@@ -120,7 +120,7 @@ dataloader, model, accelerator = accelerator_prepare(
 tester = Tester(model = transe, data_loader=dataloader)
 
 # train the model
-trainer = Trainer(model = model, data_loader = dataloader.train_dataloader(),
+trainer = Trainer(model = model, data_loader = train_dataloader,
 	epochs = 1000, lr = 0.01, accelerator = accelerator,
 	tester = tester, test = True, valid_interval = 100,
 	log_interval = 100, save_interval = 100,

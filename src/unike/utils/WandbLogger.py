@@ -44,23 +44,27 @@ class WandbLogger:
         self.endpoint = endpoint
         self.config: SimpleNamespace = SimpleNamespace(**config)
         
-        self.accelerator = None
+        self.accelerator = False
+        self.logger = None
 
-    def _init(self, accelerator: Accelerator = None):
-        """初始化日志
+    def init(self):
+        """初始化日志"""
+        if not self.accelerator:         
+            if self.endpoint == 'wandb':
+                wandb.init(project=self.project, name=self.name, config=self.config.__dict__)
+                self.logger = wandb
+            elif self.endpoint == 'swanlab':
+                swanlab.init(project=self.project, name=self.name, config=self.config.__dict__)
+                self.logger = swanlab
+    
+    def set_accelerator(self, accelerator: Accelerator):
+        """设置 Accelerator 对象
         
-        :param accelerator: :py:class:`accelerate.Accelerator` 对象
-        :type accelerator: :py:class:`accelerate.Accelerator`
+        :param accelerator: Accelerator 对象
+        :type accelerator: Accelerator
         """
-        if accelerator:
-            self.accelerator = accelerator
-            self.logger = self.accelerator
-        elif self.endpoint == 'wandb':
-            wandb.init(project=self.project, name=self.name, config=self.config.__dict__)
-            self.logger = wandb
-        elif self.endpoint == 'swanlab':
-            swanlab.init(project=self.project, name=self.name, config=self.config.__dict__)
-            self.logger = swanlab
+        self.logger = accelerator
+        self.accelerator = True
 
     def log(self, *args, **kwargs):
         """记录日志"""
@@ -69,8 +73,6 @@ class WandbLogger:
     def finish(self):
         """关闭日志"""
         if self.accelerator:
-            self.accelerator.end_training()
-        elif self.endpoint == 'wandb':
-            wandb.finish()
-        elif self.endpoint == 'swanlab':
-            swanlab.finish()
+            self.logger.end_training()
+        else:
+            self.logger.finish()
