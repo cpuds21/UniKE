@@ -14,7 +14,7 @@ WandbLogger - 使用 Weights and Biases 记录实验结果。
 import typing
 import wandb
 import swanlab
-from typing import Literal
+from typing import Literal, Any
 from accelerate import Accelerator
 from types import SimpleNamespace
 
@@ -23,7 +23,7 @@ class WandbLogger:
     """使用 `Weights and Biases <https://docs.wandb.ai/>`_ 记录实验结果。"""
 
     def __init__(self,
-        project: str ="pybind11-ke",
+        project: str ="unike",
         name: str = "transe",
         config: dict[str, typing.Any] | None = None,
         endpoint: Literal['wandb', 'swanlab'] = 'wandb'):
@@ -42,29 +42,24 @@ class WandbLogger:
         self.project = project
         self.name = name
         self.endpoint = endpoint
-        self.config: SimpleNamespace = SimpleNamespace(**config)
+        if config:
+            self.config: SimpleNamespace = SimpleNamespace(**config)
+        else:
+            self.config: SimpleNamespace = SimpleNamespace()
         
-        self.accelerator = False
-        self.logger = None
+        self.logger: Any = None
 
     def init(self):
         """初始化日志"""
-        if not self.accelerator:         
+        if not self.logger:         
             if self.endpoint == 'wandb':
+                wandb.login()
                 wandb.init(project=self.project, name=self.name, config=self.config.__dict__)
                 self.logger = wandb
             elif self.endpoint == 'swanlab':
+                swanlab.login()
                 swanlab.init(project=self.project, name=self.name, config=self.config.__dict__)
                 self.logger = swanlab
-    
-    def set_accelerator(self, accelerator: Accelerator):
-        """设置 Accelerator 对象
-        
-        :param accelerator: Accelerator 对象
-        :type accelerator: Accelerator
-        """
-        self.logger = accelerator
-        self.accelerator = True
 
     def log(self, *args, **kwargs):
         """记录日志"""
@@ -72,7 +67,7 @@ class WandbLogger:
     
     def finish(self):
         """关闭日志"""
-        if self.accelerator:
+        if isinstance(self.logger, Accelerator):
             self.logger.end_training()
         else:
             self.logger.finish()

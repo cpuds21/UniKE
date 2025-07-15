@@ -19,6 +19,7 @@ from ..module.loss import MarginLoss
 from ..module.strategy import NegativeSampling
 from ..config import Trainer, Tester
 from ..data import KGEDataLoader
+from ..utils import WandbLogger
 from loguru import logger
 
 def set_hpo_config(
@@ -276,6 +277,9 @@ def hpo_train(config: dict[str, typing.Any] | None = None):
 			use_gpu = config.use_gpu,
 			device = config.device
 		)
+  
+		wandb_logger = WandbLogger(project="NOTHING", name="NOTHING")
+		wandb_logger.logger = wandb
 
 		# # train the model
 		trainer_class: type[Trainer] = import_class(f"unike.config.{config.trainer}")
