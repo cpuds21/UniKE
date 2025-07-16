@@ -86,7 +86,7 @@ class Trainer(object):
 		epochs: int = 1000,
 		lr: float = 0.5,
 		opt_method: str = "Adam",
-		accelerator: Accelerator = None,
+		use_accelerator: bool = False,
 		use_gpu: bool = True,
 		device: str = "cuda:0",
 		tester: Tester | None = None,
@@ -113,8 +113,8 @@ class Trainer(object):
 		:type lr: float
 		:param opt_method: 优化器: **'Adam'** or **'adam'**, **'Adagrad'** or **'adagrad'**, **'SGD'** or **'sgd'**
 		:type opt_method: str
-		:param accelerator: :py:meth:`unike.config.accelerator_prepare` 返回列表中的最后一个元素。
-		:type accelerator: object
+		:param use_accelerator: 使用 accelerate 进行分布式训练
+		:type use_accelerator: bool
 		:param use_gpu: 是否使用 gpu
 		:type use_gpu: bool
 		:param device: 使用哪个 gpu
@@ -160,9 +160,6 @@ class Trainer(object):
 		#: 学习率调度器
 		self.scheduler: torch.optim.lr_scheduler.MultiStepLR | None = None
 
-		#: 是否进行分布式并行训练，:py:meth:`unike.config.accelerator_prepare` 返回列表中的最后一个元素。
-		self.accelerator = accelerator
-		
 		#: 是否使用 gpu
 		self.use_gpu: bool = use_gpu
 		#: gpu，利用 ``device`` 构造的 :py:class:`torch.device` 对象
@@ -195,8 +192,29 @@ class Trainer(object):
 
 		#: :py:class:`unike.utils.WandbLogger` 对象
 		self.wandb_logger: WandbLogger = wandb_logger
-		if self.wandb_logger:
-			self.wandb_logger.init()
+
+		if use_accelerator:
+			if wandb_logger:
+				#: :py:class:`accelerate.Accelerator` 对象
+				self.accelerator = Accelerator(log_with=wandb_logger.endpoint)
+				self.accelerator.init_trackers(
+					project_name=wandb_logger.project,
+					config=wandb_logger.config.__dict__,
+					init_kwargs={
+						wandb_logger.endpoint: {
+							'name': wandb_logger.name
+						}
+					}
+				)
+				self.wandb_logger.logger = self.accelerator
+			else:
+				self.accelerator = Accelerator()
+			
+			self.accelerator.prepare(self.data_loader, self.model)
+		else:
+			self.accelerate = None
+			if self.wandb_logger:
+				self.wandb_logger.init()
 
 	def configure_optimizers(self):
 

@@ -41,11 +41,10 @@ from unike.data import KGEDataLoader, BernSampler, TradTestSampler
 from unike.module.model import TransE
 from unike.module.loss import MarginLoss
 from unike.module.strategy import NegativeSampling
-from unike.config import accelerator_prepare
 from unike.config import Trainer, Tester
 
 ######################################################################
-# pybind11-KE 提供了很多数据集，它们很多都是 KGE 原论文发表时附带的数据集。
+# unike 提供了很多数据集，它们很多都是 KGE 原论文发表时附带的数据集。
 # :py:class:`unike.data.KGEDataLoader` 包含 ``in_path`` 用于传递数据集目录。
 
 # dataloader for training
@@ -104,24 +103,17 @@ model = NegativeSampling(
 ######################################################################
 # 训练模型
 # -------------
-# 为了进行多 GPU 训练，需要先调用 :py:meth:`unike.config.accelerator_prepare` 对数据和模型进行包装。
-#
 # UniKE 将训练循环包装成了 :py:class:`unike.config.Trainer`，
 # 可以运行它的 :py:meth:`unike.config.Trainer.run` 函数进行模型学习；
 # 也可以通过传入 :py:class:`unike.config.Tester`，
 # 使得训练器能够在训练过程中评估模型。
 
-train_dataloader, model, accelerator = accelerator_prepare(
-    dataloader.train_dataloader(),
-    model
-)
-
 # test the model
 tester = Tester(model = transe, data_loader=dataloader)
 
 # train the model
-trainer = Trainer(model = model, data_loader = train_dataloader,
-	epochs = 1000, lr = 0.01, accelerator = accelerator,
+trainer = Trainer(model = model, data_loader = dataloader.train_dataloader(),
+	epochs = 1000, lr = 0.01, use_accelerator = True,
 	tester = tester, test = True, valid_interval = 100,
 	log_interval = 100, save_interval = 100,
 	save_path = '../../checkpoint/transe.pth', delta = 0.01)

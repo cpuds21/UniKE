@@ -30,8 +30,8 @@ from unike.config import Trainer, Tester
 ######################################################################
 # 首先初始化 :py:class:`unike.utils.WandbLogger` 日志记录器，它是对 wandb 初始化操作的一层简单封装。
 
-wandb_logger = WandbLogger(
-	project="pybind11-ke",
+wandb_logger = WandbLogger().set_config(
+	project="unike",
 	name="DistMult-WN18RR-adv",
 	config=dict(
 		in_path = os.path.join(os.path.dirname(__file__), '../../benchmarks/WN18RR/'),

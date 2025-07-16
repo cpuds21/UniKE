@@ -98,7 +98,7 @@ def set_hpo_hits(
 
 def start_hpo_train(
 	config: dict[str, dict[str, typing.Any]] | None = None,
-	project: str = "pybind11-ke-sweeps",
+	project: str = "unike-sweeps",
 	count: int = 2):
 
 	"""开启超参数优化。
@@ -278,8 +278,7 @@ def hpo_train(config: dict[str, typing.Any] | None = None):
 			device = config.device
 		)
   
-		wandb_logger = WandbLogger(project="NOTHING", name="NOTHING")
-		wandb_logger.logger = wandb
+		wandb_logger = WandbLogger(endpoint='wandb')
 
 		# # train the model
 		trainer_class: type[Trainer] = import_class(f"unike.config.{config.trainer}")

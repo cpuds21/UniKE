@@ -41,7 +41,7 @@ class TransD(Model):
 		from unike.config import Trainer, Tester
 		
 		wandb_logger = WandbLogger(
-			project="pybind11-ke",
+			project="unike",
 			name="TransD-FB15K237",
 			config=dict(
 				in_path = '../../benchmarks/FB15K237/',

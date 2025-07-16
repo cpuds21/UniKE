@@ -42,7 +42,7 @@ class HolE(Model):
 		from unike.config import Trainer, Tester
 		
 		wandb_logger = WandbLogger(
-			project="pybind11-ke",
+			project="unike",
 			name="HolE-WN18RR",
 			config=dict(
 				in_path = '../../benchmarks/WN18RR/',

@@ -40,7 +40,7 @@ class RESCAL(Model):
 		from unike.config import Trainer, Tester
 		
 		wandb_logger = WandbLogger(
-			project="pybind11-ke",
+			project="unike",
 			name="RESCAL-FB15K237",
 			config=dict(
 				in_path = '../../benchmarks/FB15K237/',
