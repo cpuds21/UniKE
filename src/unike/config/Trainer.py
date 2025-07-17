@@ -212,9 +212,9 @@ class Trainer(object):
 			else:
 				self.accelerator = Accelerator()
 			
-			self.accelerator.prepare(self.data_loader, self.model)
+			self.data_loader, self.model = self.accelerator.prepare(self.data_loader, self.model)
 		else:
-			if self.wandb_logger:
+			if self.wandb_logger and self.wandb_logger.logger:
 				self.wandb_logger.init()
 
 	def configure_optimizers(self):
