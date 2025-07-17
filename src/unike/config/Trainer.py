@@ -192,10 +192,12 @@ class Trainer(object):
 
 		#: :py:class:`unike.utils.WandbLogger` 对象
 		self.wandb_logger: WandbLogger = wandb_logger
+  
+		#: :py:class:`accelerate.Accelerator` 对象
+		self.accelerator: Accelerator = None
 
 		if use_accelerator:
 			if wandb_logger:
-				#: :py:class:`accelerate.Accelerator` 对象
 				self.accelerator = Accelerator(log_with=wandb_logger.endpoint)
 				self.accelerator.init_trackers(
 					project_name=wandb_logger.project,
@@ -212,7 +214,6 @@ class Trainer(object):
 			
 			self.accelerator.prepare(self.data_loader, self.model)
 		else:
-			self.accelerate = None
 			if self.wandb_logger:
 				self.wandb_logger.init()
 
