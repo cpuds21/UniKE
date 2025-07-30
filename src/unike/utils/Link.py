@@ -102,25 +102,25 @@ class Link:
         :type device: str
         """
         
-        head_ids = torch.tensor(head_ids).long().to(device)
-        rel_ids = torch.tensor(rel_ids).long().to(device)
-        tail_ids = torch.tensor(tail_ids).long().to(device)
-        
+        head_ids_ = torch.tensor(head_ids).long().to(device)
+        rel_ids_ = torch.tensor(rel_ids).long().to(device)
+        tail_ids_ = torch.tensor(tail_ids).long().to(device)
+
         triples = []
         scores = []
         
         self.model.eval()
         self.model.to(device)
         with torch.no_grad():
-            for h_idx in range(len(head_ids)):
-                for r_idx in range(len(rel_ids)):
-                    h_id = head_ids[h_idx]
-                    r_id = rel_ids[r_idx]
+            for h_idx in range(len(head_ids_)):
+                for r_idx in range(len(rel_ids_)):
+                    h_id = head_ids_[h_idx]
+                    r_id = rel_ids_[r_idx]
                     
-                    h_id = h_id.tile((tail_ids.shape[0], ))
-                    r_id = r_id.tile((tail_ids.shape[0], ))
+                    h_id = h_id.tile((tail_ids_.shape[0], ))
+                    r_id = r_id.tile((tail_ids_.shape[0], ))
                     
-                    triple = torch.stack((h_id, r_id, tail_ids)).T
+                    triple = torch.stack((h_id, r_id, tail_ids_)).T
                     data = {
                         "positive_sample": triple
                     }

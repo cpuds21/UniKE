@@ -11,10 +11,9 @@
 WandbLogger - 使用 Weights and Biases 记录实验结果。
 """
 
-import typing
 import wandb
 import swanlab
-from typing import Literal
+from typing import Literal, Any, Optional
 from accelerate import Accelerator
 from types import SimpleNamespace
 
@@ -29,18 +28,15 @@ class WandbLogger:
         :param endpoint: 使用 wandb 还是 swanlab 记录实验结果
         :type endpoint: Literal['wandb', 'swanlab']
         """
-        self.project = None
-        self.name = None
         self.config: SimpleNamespace = SimpleNamespace()
         self.endpoint = endpoint
-        
-        match self.endpoint:
-            case 'wandb':
-                self.logger = wandb
-            case 'swanlab':
-                self.logger = swanlab
+        self.logger: Any = None
 
-    def set_config(self, project: str, name: str, config: dict[str, typing.Any] | None = None) -> 'WandbLogger':
+        self.project: str = 'UniKE'
+        self.name: str = ''
+        self.offline = False
+
+    def set_config(self, project: str, name: str, config: dict[str, Any] | None = None, offline: bool = False) -> 'WandbLogger':
         """设置项目名称和配置。
         
         :param project: wandb 的项目名称
@@ -48,22 +44,29 @@ class WandbLogger:
         :param name: wandb 的 run name
         :type name: str
         :param config: wandb 的项目配置如超参数。
-        :type config: dict[str, typing.Any] | None
+        :type config: dict[str, Any] | None
+        :param offline: 是否离线模式
+        :type offline: bool
         """
         self.project = project
         self.name = name
+        self.offline = offline
         if config:
             self.config: SimpleNamespace = SimpleNamespace(**config)
         return self
 
-    def init(self):
+    def _init(self):
+        if self.logger is not None:
+            return
         if self.endpoint == 'wandb':
-            wandb.login()
-            wandb.init(project=self.project, name=self.name, config=self.config.__dict__)
+            if not self.offline:
+                wandb.login()
+            wandb.init(project=self.project, name=self.name, config=self.config.__dict__, mode='offline' if self.offline else 'online')
             self.logger = wandb
         elif self.endpoint == 'swanlab':
-            swanlab.login()
-            swanlab.init(project=self.project, name=self.name, config=self.config.__dict__)
+            if not self.offline:
+                swanlab.login()
+            swanlab.init(project=self.project, name=self.name, config=self.config.__dict__, mode='offline' if self.offline else 'online')
             self.logger = swanlab
 
     def log(self, *args, **kwargs):

@@ -21,18 +21,21 @@ from ..config import Trainer, Tester
 from ..data import KGEDataLoader
 from ..utils import WandbLogger
 from loguru import logger
+from typing import Literal, Any
+import os
+
 
 def set_hpo_config(
 	method: str = 'bayes',
 	sweep_name: str = 'unike_hpo',
 	metric_name: str = 'val/hits@10',
-	metric_goal: str = 'maximize',
+	metric_goal: Literal['maximize', 'minimize'] = 'maximize',
 	data_loader_config: dict[str, dict[str, typing.Any]] = {},
 	kge_config: dict[str, dict[str, typing.Any]] = {},
 	loss_config: dict[str, dict[str, typing.Any]] = {},
 	strategy_config: dict[str, dict[str, typing.Any]] = {},
 	tester_config: dict[str, dict[str, typing.Any]] = {},
-	trainer_config: dict[str, dict[str, typing.Any]] = {}) -> dict[str, dict[str, typing.Any]]:
+	trainer_config: dict[str, dict[str, typing.Any]] = {}) -> dict[str, Any]:
 
 	"""设置超参数优化范围。
 	
@@ -60,7 +63,7 @@ def set_hpo_config(
 	:rtype: dict
 	"""
 
-	sweep_config: dict[str, str] = {
+	sweep_config: dict[str, Any] = {
 		'method': method,
 		'name': sweep_name
 	}
@@ -97,9 +100,9 @@ def set_hpo_hits(
 	logger.info(f"Hits@N 指标由 {tmp} 变为 {Tester.hits}")
 
 def start_hpo_train(
-	config: dict[str, dict[str, typing.Any]] | None = None,
+	config: dict[str, Any],
 	project: str = "unike-sweeps",
-	count: int = 2):
+	count: int = 2) -> None:
 
 	"""开启超参数优化。
 	
@@ -110,195 +113,195 @@ def start_hpo_train(
 	:param count: 进行几次尝试。
 	:type count: int
 	"""
-
 	wandb.login()
 
 	sweep_id = wandb.sweep(config, project=project)
 
 	wandb.agent(sweep_id, hpo_train, count=count)
 
-def hpo_train(config: dict[str, typing.Any] | None = None):
+def hpo_train(config: dict[str, Any] | None = None):
 
 	"""超参数优化训练循环函数。
 	
 	:param config: wandb 的项目配置如超参数。
-	:type config: dict[str, typing.Any] | None
+	:type config: dict[str, Any]
 	"""
 	
 	with wandb.init(config = config):
 		
-		config = wandb.config
+		config_ = wandb.config
 
 		# dataloader for training
-		dataloader_class: type[KGEDataLoader] = import_class(f"unike.data.{config.dataloader}")
+		dataloader_class: type[KGEDataLoader] = import_class(f"unike.data.{config_.dataloader}")
 		dataloader = dataloader_class(
-			in_path = config.in_path,
-			ent_file = config.ent_file,
-			rel_file = config.rel_file,
-			train_file = config.train_file,
-			valid_file = config.valid_file,
-			test_file = config.test_file,
-			batch_size = config.batch_size,
-			neg_ent = config.neg_ent,
+			in_path = config_.in_path,
+			ent_file = config_.ent_file,
+			rel_file = config_.rel_file,
+			train_file = config_.train_file,
+			valid_file = config_.valid_file,
+			test_file = config_.test_file,
+			batch_size = config_.batch_size,
+			neg_ent = config_.neg_ent,
 			test = True,
-			test_batch_size = config.test_batch_size,
-			type_constrain = config.type_constrain,
-			num_workers = config.num_workers,
-			train_sampler = import_class(f"unike.data.{config.train_sampler}"),
-			test_sampler = import_class(f"unike.data.{config.test_sampler}")
+			test_batch_size = config_.test_batch_size,
+			type_constrain = config_.type_constrain,
+			num_workers = config_.num_workers,
+			train_sampler = import_class(f"unike.data.{config_.train_sampler}"),
+			test_sampler = import_class(f"unike.data.{config_.test_sampler}")
 		)
 
 		# define the model
-		model_class = import_class(f"unike.module.model.{config.model}")
-		if config.model in ["TransE", "TransH"]:
+		model_class = import_class(f"unike.module.model.{config_.model}")
+		if config_.model in ["TransE", "TransH"]:
 			kge_model = model_class(
 			    ent_tol = dataloader.get_ent_tol(),
 			    rel_tol = dataloader.get_rel_tol(),
-			    dim = config.dim,
-			    p_norm = config.p_norm,
-			    norm_flag = config.norm_flag
+			    dim = config_.dim,
+			    p_norm = config_.p_norm,
+			    norm_flag = config_.norm_flag
 			)
-		elif config.model == "TransR":
+		elif config_.model == "TransR":
 			transe = TransE(
 				ent_tol = dataloader.get_ent_tol(),
 				rel_tol = dataloader.get_rel_tol(),
-				dim = config.dim,
-				p_norm = config.p_norm,
-				norm_flag = config.norm_flag
+				dim = config_.dim,
+				p_norm = config_.p_norm,
+				norm_flag = config_.norm_flag
 			)
 			kge_model = model_class(
 				ent_tol = dataloader.get_ent_tol(),
 				rel_tol = dataloader.get_rel_tol(),
-				dim_e = config.dim,
-				dim_r = config.dim,
-				p_norm = config.p_norm,
-				norm_flag = config.norm_flag,
-				rand_init = config.rand_init)
+				dim_e = config_.dim,
+				dim_r = config_.dim,
+				p_norm = config_.p_norm,
+				norm_flag = config_.norm_flag,
+				rand_init = config_.rand_init)
 			model_e = NegativeSampling(
 				model = transe,
-				loss = MarginLoss(margin = config.margin_e)
+				loss = MarginLoss(margin = config_.margin_e)
 			)
 			trainer_e = Trainer(
 				model = model_e,
 				data_loader = dataloader.train_dataloader(),
 				epochs = 1,
-				lr = config.lr_e,
-				opt_method = config.opt_method_e,
-				use_gpu = config.use_gpu,
-				device = config.device
+				lr = config_.lr_e,
+				opt_method = config_.opt_method_e,
+				use_gpu = config_.use_gpu,
+				device = config_.device
 			)
 			trainer_e.run()
 			parameters = transe.get_parameters()
 			transe.save_parameters("./transr_transe.json")
 			kge_model.set_parameters(parameters)
-		elif config.model == "TransD":
+		elif config_.model == "TransD":
 			kge_model = model_class(
 				ent_tol = dataloader.get_ent_tol(),
 				rel_tol = dataloader.get_rel_tol(),
-				dim_e = config.dim_e,
-				dim_r = config.dim_r,
-				p_norm = config.p_norm,
-				norm_flag = config.norm_flag)
-		elif config.model == "RotatE":
+				dim_e = config_.dim_e,
+				dim_r = config_.dim_r,
+				p_norm = config_.p_norm,
+				norm_flag = config_.norm_flag)
+		elif config_.model == "RotatE":
 			kge_model = model_class(
 				ent_tol = dataloader.get_ent_tol(),
 				rel_tol = dataloader.get_rel_tol(),
-				dim = config.dim,
-				margin = config.margin,
-				epsilon = config.epsilon)
-		elif config.model in ["RESCAL", "DistMult", "HolE", "ComplEx", "Analogy", "SimplE"]:
+				dim = config_.dim,
+				margin = config_.margin,
+				epsilon = config_.epsilon)
+		elif config_.model in ["RESCAL", "DistMult", "HolE", "ComplEx", "Analogy", "SimplE"]:
 			kge_model = model_class(
 			    ent_tol = dataloader.get_ent_tol(),
 			    rel_tol = dataloader.get_rel_tol(),
-			    dim = config.dim)
-		elif config.model == "RGCN":
+			    dim = config_.dim)
+		elif config_.model == "RGCN":
 			kge_model = model_class(
 				ent_tol = dataloader.get_ent_tol(),
 				rel_tol = dataloader.get_rel_tol(),
-				dim = config.dim,
-				num_layers = config.num_layers)
-		elif config.model == "CompGCN":
+				dim = config_.dim,
+				num_layers = config_.num_layers)
+		elif config_.model == "CompGCN":
 			kge_model = model_class(
 				ent_tol = dataloader.get_ent_tol(),
 				rel_tol = dataloader.get_rel_tol(),
-				dim = config.dim,
-				opn = config.opn,
-				fet_drop = config.fet_drop,
-				hid_drop = config.hid_drop,
-				margin = config.margin,
-				decoder_model = config.decoder_model)
+				dim = config_.dim,
+				opn = config_.opn,
+				fet_drop = config_.fet_drop,
+				hid_drop = config_.hid_drop,
+				margin = config_.margin,
+				decoder_model = config_.decoder_model)
 
 		# define the loss function
-		loss_class = import_class(f"unike.module.loss.{config.loss}")
-		if config.loss == 'MarginLoss':
+		loss_class = import_class(f"unike.module.loss.{config_.loss}")
+		if config_.loss == 'MarginLoss':
 			loss = loss_class(
-				adv_temperature = config.adv_temperature,
-				margin = config.margin
+				adv_temperature = config_.adv_temperature,
+				margin = config_.margin
 			)
-		elif config.loss in ['SigmoidLoss', 'SoftplusLoss']:
-			loss = loss_class(adv_temperature = config.adv_temperature)
-		elif config.loss == 'RGCNLoss':
+		elif config_.loss in ['SigmoidLoss', 'SoftplusLoss']:
+			loss = loss_class(adv_temperature = config_.adv_temperature)
+		elif config_.loss == 'RGCNLoss':
 			loss = loss_class(
 				model = kge_model,
-				regularization = config.regularization
+				regularization = config_.regularization
 			)
-		elif config.loss == 'CompGCNLoss':
+		elif config_.loss == 'CompGCNLoss':
 			loss = loss_class(model = kge_model)
 		
 		# define the strategy
-		strategy_class = import_class(f"unike.module.strategy.{config.strategy}")
-		if config.strategy == 'NegativeSampling':
+		strategy_class = import_class(f"unike.module.strategy.{config_.strategy}")
+		if config_.strategy == 'NegativeSampling':
 			model = strategy_class(
 				model = kge_model,
 				loss = loss,
-				regul_rate = config.regul_rate,
-				l3_regul_rate = config.l3_regul_rate
+				regul_rate = config_.regul_rate,
+				l3_regul_rate = config_.l3_regul_rate
 			)
-		elif config.strategy == 'RGCNSampling':
+		elif config_.strategy == 'RGCNSampling':
 			model = strategy_class(
 				model = kge_model,
 				loss = loss
 			)
-		elif config.strategy == 'CompGCNSampling':
+		elif config_.strategy == 'CompGCNSampling':
 			model = strategy_class(
 				model = kge_model,
 				loss = loss,
-				smoothing = config.smoothing,
+				smoothing = config_.smoothing,
 				ent_tol = dataloader.train_sampler.ent_tol
 			)
 
 		# test the model
-		tester_class: type[Tester] = import_class(f"unike.config.{config.tester}")
+		tester_class: type[Tester] = import_class(f"unike.config.{config_.tester}")
 		tester = tester_class(
 			model = kge_model,
 			data_loader = dataloader,
-			prediction = config.prediction,
-			use_tqdm = config.use_tqdm,
-			use_gpu = config.use_gpu,
-			device = config.device
+			prediction = config_.prediction,
+			use_tqdm = config_.use_tqdm,
+			use_gpu = config_.use_gpu_tester,
+			device = config_.device_tester
 		)
   
 		wandb_logger = WandbLogger(endpoint='wandb')
+		wandb_logger.logger = wandb
 
 		# # train the model
-		trainer_class: type[Trainer] = import_class(f"unike.config.{config.trainer}")
+		trainer_class: type[Trainer] = import_class(f"unike.config.{config_.trainer}")
 		trainer = trainer_class(
 			model = model,
 			data_loader = dataloader.train_dataloader(),
-			epochs = config.epochs,
-			lr = config.lr,
-			opt_method = config.opt_method,
-			use_gpu = config.use_gpu,
-			device = config.device,
+			epochs = config_.epochs,
+			lr = config_.lr,
+			opt_method = config_.opt_method,
+			use_gpu = config_.use_gpu_trainer,
+			device = config_.device_trainer,
 			tester = tester,
 			test = True,
-			valid_interval = config.valid_interval,
-			log_interval = config.log_interval,
-			save_path = config.save_path,
-			use_early_stopping = config.use_early_stopping,
-			metric = config.metric,
-			patience = config.patience,
-			delta = config.delta,
+			valid_interval = config_.valid_interval,
+			log_interval = config_.log_interval,
+			save_path = config_.save_path,
+			use_early_stopping = config_.use_early_stopping,
+			metric = config_.metric,
+			patience = config_.patience,
+			delta = config_.delta,
 			wandb_logger = wandb_logger
 		)
 		trainer.run()

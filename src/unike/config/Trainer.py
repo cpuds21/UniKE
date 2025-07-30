@@ -214,8 +214,8 @@ class Trainer(object):
 			
 			self.data_loader, self.model = self.accelerator.prepare(self.data_loader, self.model)
 		else:
-			if self.wandb_logger and self.wandb_logger.logger:
-				self.wandb_logger.init()
+			if self.wandb_logger and self.wandb_logger.logger is None:
+				self.wandb_logger._init()
 
 	def configure_optimizers(self):
 
@@ -463,6 +463,12 @@ def get_trainer_hpo_config() -> dict[str, dict[str, typing.Any]]:
 			'opt_method': {
 				'values': ['adam', 'adagrad', 'sgd']
 			},
+			'use_gpu_trainer': {
+				'value': True
+			},
+			'device_trainer': {
+				'value': 'cuda:0'
+			},
 			'valid_interval': {
 				'value': 100
 			},
@@ -504,6 +510,12 @@ def get_trainer_hpo_config() -> dict[str, dict[str, typing.Any]]:
 		},
 		'opt_method': {
 			'values': ['adam', 'adagrad', 'sgd']
+		},
+		'use_gpu_trainer': {
+			'value': True
+		},
+		'device_trainer': {
+			'value': 'cuda:0'
 		},
 		'valid_interval': {
 			'value': 100
