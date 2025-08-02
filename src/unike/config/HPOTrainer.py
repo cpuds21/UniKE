@@ -186,7 +186,7 @@ def hpo_train(config: dict[str, Any] | None = None):
 				epochs = 1,
 				lr = config_.lr_e,
 				opt_method = config_.opt_method_e,
-				use_gpu = config_.use_gpu,
+				use_gpu = config_.use_gpu_trainer,
 				device = config_.device
 			)
 			trainer_e.run()
