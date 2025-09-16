@@ -17,3 +17,5 @@ sphinx-prompt
 sphinxcontrib-katex
     # self add
 typing-extensions
+
+loguru

@@ -3,7 +3,7 @@
 
 **UniKE** 是一个知识图谱嵌入工具包，能够运行在 Windows 和 Linux 操作系统上。
 
-为了使用 pybind11-OpenKE，请先 :doc:`install` 这个项目。 
+为了使用 UniKE，请先 :doc:`install` 这个项目。 
 
 目录
 --------

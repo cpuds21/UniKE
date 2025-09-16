@@ -34,5 +34,4 @@
 
 .. prompt:: bash
 
-    cd examples/TransE/
-    python single_gpu_transe_FB15K.py
+    uv run examples/TransE/single_gpu_transe_FB15K.py

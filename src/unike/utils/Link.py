@@ -7,7 +7,7 @@
 # 该脚本定义了 Link 类.
 
 """
-Link - 链接分数计算.
+Link - 链接分数计算。
 """
 
 import torch

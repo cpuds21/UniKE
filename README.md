@@ -1,10 +1,12 @@
 # UniKE — 知识图谱嵌入工具包
 
-[![Documentation Status](https://readthedocs.org/projects/unike/badge/?version=latest)](https://unike.readthedocs.io/zh_CN/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/unike/badge/?version=latest)](https://unike.readthedocs.io/)
+![GitHub last commit](https://img.shields.io/github/last-commit/CPU-DS/UniKE)
+
 
 基于 [OpenKE-PyTorch](https://github.com/thunlp/OpenKE/tree/OpenKE-PyTorch) 开发的知识图谱嵌入工具包，支持跨平台运行，具备自动超参数搜索、高效并行训练以及实验结果记录功能，为研究与应用提供强大助力。
 
-教程和 API 参考文档可以访问 [unike.readthedocs.io](https://unike.readthedocs.io/zh_CN/latest/)。
+教程和 API 参考文档可以访问 [unike.readthedocs.io](https://unike.readthedocs.io/)。
 
 ## 项目结构
 

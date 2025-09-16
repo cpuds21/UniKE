@@ -43,11 +43,11 @@ html_theme_options = {
 
     'doc_items': {
         'AD-KGE': 'https://github.com/CPU-DS/AD-KGE',
-        'UniKE': 'https://unike.readthedocs.io/zh-cn/latest/',
+        'UniKE': 'https://unike.readthedocs.io/',
     },
 
     'logo': '',
-    'logo_dark': '_static/images/logo-dark.png',
+    'logo_dark': '',
     'logo_icon': '',
 }
 
@@ -75,16 +75,7 @@ sphinx_gallery_conf = {
 autosummary_generate = True
 bibtex_bibfiles = ['refs.bib']
 
-autodoc_mock_imports = ['torch', 'dgl', 'numpy', 'tqdm', 'wandb', 'accelerate']
-
-intersphinx_mapping = {
-    'rtd': ('https://docs.readthedocs.io/en/stable/', None),
-    'python': ('https://docs.python.org/3/', None),
-    'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
-    'torch': ('https://pytorch.org/docs/stable/', None),
-    'numpy': ('https://numpy.org/doc/stable', None),
-    'dgl': ('https://docs.dgl.ai/', None),
-}
+autodoc_mock_imports = ['torch', 'dgl', 'numpy', 'tqdm', 'wandb', 'accelerate', 'swanlab', 'loguru', 'pandas']
 
 intersphinx_disabled_domains = ['std']
 
