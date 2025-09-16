@@ -19,8 +19,7 @@ class Link:
     """
     使用 KGE 模型对感兴趣的三元组计算链接分数。
     """
-    def __init__(self, 
-                model: Model,
+    def __init__(self,
                 in_path: str = './',
                 ent_file: str = "entity2id.txt", 
                 rel_file: str = "relation2id.txt",
@@ -39,8 +38,7 @@ class Link:
         :param all_file: all2id.txt
         :type all_file: str
         """
-    
-        self.model = model
+
         self.in_path = in_path
         self.ent_file = ent_file
         self.rel_file = rel_file
@@ -86,9 +84,15 @@ class Link:
                 self.all.add((int(head), int(rel), int(tail)))
         
         
-    def link(self, head_ids: list[int], rel_ids: list[int], tail_ids: list[int], device: str = 'cpu') -> pd.DataFrame:
+    def link(self, 
+             head_ids: list[int], 
+             rel_ids: list[int], 
+             tail_ids: list[int], 
+             model: Model, 
+             device: str = 'cpu'
+        ) -> pd.DataFrame:
         
-        """对给定的头实体、关系和尾实体进行组合并计算链接分数。
+        """对给定的头实体、关系和尾实体进行组合并使用模型计算链接分数。
         
         :param head_ids: 头实体列表
         :type head_ids: list[int]
@@ -96,10 +100,12 @@ class Link:
         :type rel_ids: list[int]
         :param tail_ids: 尾实体列表
         :type tail_ids: list[int]
-        :returns: 结果数据框
-        :rtype: pd.DataFrame
+        :param device: 模型
+        :type device: Model
         :param device: 设备
         :type device: str
+        :returns: 结果数据框
+        :rtype: pd.DataFrame
         """
         
         head_ids_ = torch.tensor(head_ids).long().to(device)
@@ -109,8 +115,8 @@ class Link:
         triples = []
         scores = []
         
-        self.model.eval()
-        self.model.to(device)
+        model.eval()
+        model.to(device)
         with torch.no_grad():
             for h_idx in range(len(head_ids_)):
                 for r_idx in range(len(rel_ids_)):
@@ -124,7 +130,7 @@ class Link:
                     data = {
                         "positive_sample": triple
                     }
-                    score = self.model.predict(data, "single")
+                    score = model.predict(data, "single")
                     
                     scores.append(score)
                     triples.append(triple)
